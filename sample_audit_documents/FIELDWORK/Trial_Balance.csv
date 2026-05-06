@@ -1,0 +1,5 @@
+Account Code,Account Name,Debit,Credit,Balance
+1001,Cash,50000,,50000
+2001,Accounts Payable,,30000,-30000
+3001,Revenue,,100000,100000
+4001,Expenses,20000,,20000

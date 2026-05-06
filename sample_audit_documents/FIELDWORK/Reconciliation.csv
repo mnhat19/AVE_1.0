@@ -1,0 +1,3 @@
+Item,Book Balance,Bank Balance,Difference,Explanation
+Deposits,50000,50000,0,Matched
+Checks Outstanding,,2000,-2000,Not yet cleared

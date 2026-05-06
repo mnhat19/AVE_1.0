@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Execute Audit - AuditControl AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Source+Sans+3:wght@400;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#00685f",
+                    "error-container": "#ffdad6",
+                    "background": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#fffbff",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "primary-fixed-dim": "#6bd8cb",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "on-secondary-fixed": "#002113",
+                    "on-error": "#ffffff",
+                    "tertiary": "#924628",
+                    "outline-variant": "#bcc9c6",
+                    "primary-fixed": "#89f5e7",
+                    "surface-variant": "#d3e4fe",
+                    "on-primary-fixed-variant": "#005049",
+                    "surface-container": "#e5eeff",
+                    "primary-container": "#008378",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface": "#f8f9ff",
+                    "inverse-primary": "#6bd8cb",
+                    "surface-dim": "#cbdbf5",
+                    "surface-bright": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#3d4947",
+                    "on-primary-fixed": "#00201d",
+                    "on-tertiary-fixed": "#370e00",
+                    "secondary": "#006c49",
+                    "on-background": "#0b1c30",
+                    "tertiary-container": "#b05e3d",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbce",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-fixed-variant": "#773215",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-primary-container": "#f4fffc",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "outline": "#6d7a77",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-highest": "#d3e4fe",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-tint": "#006a61",
+                    "on-surface": "#0b1c30"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xl": "48px",
+                    "xs": "4px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "margin": "24px",
+                    "lg": "24px",
+                    "grid_columns": "12",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Source Sans 3"],
+                    "body-lg": ["Source Sans 3"],
+                    "body-sm": ["Source Sans 3"],
+                    "h2": ["Sora"],
+                    "h3": ["Sora"],
+                    "h1": ["Sora"],
+                    "label-caps": ["Source Sans 3"],
+                    "mono-data": ["Source Code Pro"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "mono-data": ["13px", {"lineHeight": "1", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+      }
+      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      .bg-grid-subtle {
+        background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md bg-grid-subtle min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface flex justify-between items-center px-margin py-sm w-full z-50 fixed top-0 border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-gutter">
+<span class="font-h2 text-h2 font-semibold tracking-tight text-primary dark:text-primary-fixed">AuditControl AI</span>
+<nav class="hidden md:flex gap-md ml-xl">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 py-1" href="#">Dashboard</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 py-1" href="#">Logs</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 py-1" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="bg-surface-container px-sm py-xs rounded-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant uppercase">Session: 882-AFX</span>
+</div>
+<div class="flex gap-sm">
+<button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-container-high transition-colors">monitor_heart</button>
+<button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-container-high transition-colors">database</button>
+<button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-container-high transition-colors">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-[64px] bottom-0 flex flex-col w-64 z-40 bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline">
+<div class="p-gutter border-b border-outline-variant">
+<h3 class="font-h3 text-h3 text-primary">Audit Workflow</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-70">v2.4.0-stable</p>
+</div>
+<div class="flex-1 py-md">
+<div class="px-sm mb-xs">
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-caps text-label-caps">Session Configuration</span>
+</a>
+</div>
+<div class="px-sm mb-xs">
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="font-label-caps text-label-caps">Source Upload</span>
+</a>
+</div>
+<div class="px-sm mb-xs">
+<a class="flex items-center gap-sm px-sm py-md rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary border-l-4 border-secondary font-bold transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps text-label-caps">Audit Engine</span>
+</a>
+</div>
+<div class="px-sm mb-xs">
+<a class="flex items-center gap-sm px-sm py-md rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analysis Results</span>
+</a>
+</div>
+</div>
+<div class="p-gutter">
+<button class="w-full bg-primary text-on-primary py-sm px-md rounded-lg font-label-caps text-label-caps flex items-center justify-center gap-xs active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Audit
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 mt-[64px] p-margin">
+<!-- Breadcrumb / Workflow Stepper -->
+<div class="max-w-6xl mx-auto mb-lg flex items-center gap-md">
+<div class="flex items-center gap-sm text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-caps text-label-caps">Step 1: Configure</span>
+</div>
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+<div class="flex items-center gap-sm text-secondary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-caps text-label-caps">Step 2: Upload</span>
+</div>
+<div class="h-[1px] w-12 bg-outline-variant"></div>
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">radio_button_checked</span>
+<span class="font-label-caps text-label-caps">Step 3: Execute</span>
+</div>
+</div>
+<div class="max-w-6xl mx-auto grid grid-cols-12 gap-gutter">
+<!-- Left Column: Configuration & Trigger -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg shadow-sm">
+<h1 class="font-h1 text-h1 text-on-surface mb-xs">Execute Audit</h1>
+<p class="font-body-md text-on-surface-variant mb-lg">Configure engine execution parameters and initiate the diagnostic sequence.</p>
+<div class="space-y-md">
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-sm uppercase">Audit Stage Selection</label>
+<div class="space-y-sm">
+<label class="flex items-start gap-md p-md border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors group">
+<input class="mt-xs text-primary focus:ring-primary h-4 w-4 border-outline" name="stage" type="radio" value="INTERIM"/>
+<div>
+<span class="font-h3 text-h3 block text-on-surface">INTERIM</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Preliminary risk assessment and internal control evaluation.</p>
+</div>
+</label>
+<label class="flex items-start gap-md p-md border-2 border-primary bg-primary-container/10 rounded-lg cursor-pointer transition-colors group">
+<input checked="" class="mt-xs text-primary focus:ring-primary h-4 w-4 border-outline" name="stage" type="radio" value="FIELDWORK"/>
+<div>
+<span class="font-h3 text-h3 block text-on-surface">FIELDWORK</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Detailed substantive testing and data verification protocols.</p>
+</div>
+</label>
+<label class="flex items-start gap-md p-md border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors group">
+<input class="mt-xs text-primary focus:ring-primary h-4 w-4 border-outline" name="stage" type="radio" value="BOTH"/>
+<div>
+<span class="font-h3 text-h3 block text-on-surface">BOTH</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Comprehensive end-to-end audit engine execution.</p>
+</div>
+</label>
+</div>
+</div>
+<div class="mt-xl">
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary py-md px-lg rounded-xl flex items-center justify-center gap-md active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+<span class="font-h3 text-h3">Run Audit Engine</span>
+</button>
+<p class="mt-sm text-center font-body-sm text-body-sm text-on-surface-variant">Estimated compute time: 4m 12s</p>
+</div>
+</section>
+<!-- System Stats Mini-Card -->
+<div class="bg-surface-container-high border border-outline-variant rounded-lg p-md">
+<div class="flex justify-between items-center mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ENGINE HEALTH</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-lowest p-sm rounded border border-outline-variant">
+<span class="font-label-caps text-on-surface-variant block">CPU LOAD</span>
+<span class="font-mono-data text-h3 text-primary">12.4%</span>
+</div>
+<div class="bg-surface-container-lowest p-sm rounded border border-outline-variant">
+<span class="font-label-caps text-on-surface-variant block">MEM USAGE</span>
+<span class="font-mono-data text-h3 text-primary">2.8 GB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Execution Monitor -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-gutter">
+<!-- Status Header -->
+<section class="bg-inverse-surface text-surface border border-outline rounded-lg p-lg">
+<div class="flex justify-between items-center mb-md">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center justify-center">
+<div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-20"></div>
+<span class="material-symbols-outlined text-primary-fixed text-[32px]">sync</span>
+</div>
+<div>
+<h2 class="font-h3 text-h3 text-surface-bright">Execution Active</h2>
+<p class="font-body-sm text-surface-variant">Processing dataset: SOURCE_TRANS_2023_Q4.csv</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-mono-data text-h2 text-primary-fixed">68%</span>
+<span class="font-label-caps block text-surface-variant">COMPLETION</span>
+</div>
+</div>
+<div class="w-full bg-on-surface-variant rounded-full h-2 mb-sm overflow-hidden">
+<div class="bg-primary-fixed h-full rounded-full" style="width: 68%;"></div>
+</div>
+<div class="flex justify-between font-label-caps text-surface-variant">
+<span>INITIATING</span>
+<span>ANALYZING</span>
+<span>VALIDATING</span>
+<span class="opacity-30">REPORTING</span>
+</div>
+</section>
+<!-- Real-time Logs -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col h-[500px]">
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">terminal</span>
+<span class="font-label-caps text-label-caps">Execution Monitor Logs</span>
+</div>
+<div class="flex gap-sm">
+<button class="material-symbols-outlined text-[18px] text-on-surface-variant hover:text-primary">download</button>
+<button class="material-symbols-outlined text-[18px] text-on-surface-variant hover:text-primary">fullscreen</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-md font-mono-data text-mono-data custom-scrollbar space-y-xs bg-[#0b1c30]">
+<p class="text-secondary-fixed">[14:02:11] ENGINE: Initializing core audit kernel v2.4.0...</p>
+<p class="text-surface-variant">[14:02:12] SYSTEM: Memory allocation successful (4096MB)</p>
+<p class="text-surface-variant">[14:02:14] LOAD: Accessing AWS S3 bucket: 'audit-data-secure-882'</p>
+<p class="text-secondary-fixed">[14:02:15] PROCESS: Streaming 450,230 transaction records...</p>
+<p class="text-surface-variant">[14:02:18] KERNEL: Applying fieldwork validation ruleset #7</p>
+<p class="text-surface-variant">[14:02:22] ANALYZE: Pattern matching sequence 01/04 active</p>
+<p class="text-surface-variant">[14:03:01] ENGINE: Identifying anomalous recurring payments...</p>
+<p class="text-surface-variant">[14:03:15] SYSTEM: Heuristic analysis 45% complete</p>
+<div class="flex items-center gap-sm text-error border-l-2 border-error pl-sm py-xs bg-error-container/5 my-xs">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>[14:03:45] ALERT: Schema mismatch detected on Row 45,291. Attempting auto-correction...</span>
+</div>
+<p class="text-surface-variant">[14:03:46] SYSTEM: Auto-correction successful. Data integrity restored.</p>
+<p class="text-secondary-fixed">[14:03:50] PROCESS: Validating journal entry logic...</p>
+<p class="text-primary-fixed-dim animate-pulse">[14:04:02] RUNNING: Detecting duplicate vendor IDs...</p>
+</div>
+<div class="p-sm bg-surface-container-low rounded-b-lg border-t border-outline-variant flex items-center justify-between">
+<span class="font-body-sm text-on-surface-variant">Connected to Engine Proxy: 10.0.4.122</span>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-on-surface-variant">LOCKED &amp; SECURE</span>
+</div>
+</div>
+</section>
+<!-- Error State Placeholder (Hidden or Visible on Fail) -->
+<div class="border border-error-container bg-error-container/10 p-md rounded-lg flex items-center gap-md">
+<div class="bg-error text-on-error w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">error</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-body-lg font-bold text-error">System Alert: Memory Warning</h4>
+<p class="font-body-sm text-on-error-container">Large dataset detected. Execution may slow down. Engine is automatically scaling worker nodes to compensate.</p>
+</div>
+<button class="font-label-caps text-error border border-error px-md py-xs rounded hover:bg-error/10 transition-colors">
+                        DISMISS
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Visual Polish: Decorative Grid Elements -->
+<div class="fixed inset-0 pointer-events-none opacity-10">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary filter blur-[120px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary filter blur-[120px] rounded-full"></div>
+</div>
+</body></html>

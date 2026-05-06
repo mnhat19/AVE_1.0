@@ -1,0 +1,13 @@
+Walkthrough Notes: Quy trình mua hàng
+
+Ngày: 2023-10-01
+Người thực hiện: Auditor A
+
+Quan sát:
+- Nhân viên mua hàng nhận yêu cầu từ bộ phận sử dụng.
+- Tìm kiếm 3 nhà cung cấp khác nhau.
+- Phê duyệt bởi manager trước khi ký hợp đồng.
+- Hàng nhận được được kiểm tra bởi QC department.
+
+Kết luận:
+Quy trình tuân thủ SOP, kiểm soát hiệu quả.

@@ -1,0 +1,5 @@
+date,reference,debit,credit,description,amount
+2026-02-01,JV-9001,1000000,1000000,Opening entry,1000000
+2026-02-02,JV-9002,not-a-number,500000,Malformed debit,500000
+,JV-9003,250000,250000,Missing date,250000
+2026-02-05,JV-9004,750000,750000,Valid control sample,750000

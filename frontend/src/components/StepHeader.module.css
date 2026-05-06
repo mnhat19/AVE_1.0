@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-on-surface-variant);
+}
+
+.breadcrumbDivider {
+  font-weight: 700;
+  color: var(--color-outline);
+}
+
+.title {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+  max-width: 640px;
+  color: var(--color-on-surface-variant);
+}

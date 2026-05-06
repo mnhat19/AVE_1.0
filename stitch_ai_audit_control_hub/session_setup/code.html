@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuditControl AI - Start Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#00685f",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#fffbff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary-fixed-dim": "#6bd8cb",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary-fixed": "#002113",
+                        "on-error": "#ffffff",
+                        "tertiary": "#924628",
+                        "outline-variant": "#bcc9c6",
+                        "primary-fixed": "#89f5e7",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed-variant": "#005049",
+                        "surface-container": "#e5eeff",
+                        "primary-container": "#008378",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface": "#f8f9ff",
+                        "inverse-primary": "#6bd8cb",
+                        "surface-dim": "#cbdbf5",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#3d4947",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-fixed": "#370e00",
+                        "secondary": "#006c49",
+                        "on-background": "#0b1c30",
+                        "tertiary-container": "#b05e3d",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed-variant": "#773215",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-container": "#f4fffc",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "outline": "#6d7a77",
+                        "secondary-container": "#6cf8bb",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#006a61",
+                        "on-surface": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "margin": "24px",
+                        "lg": "24px",
+                        "grid_columns": "12",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Source Sans 3"],
+                        "body-lg": ["Source Sans 3"],
+                        "body-sm": ["Source Sans 3"],
+                        "h2": ["Sora"],
+                        "h3": ["Sora"],
+                        "h1": ["Sora"],
+                        "label-caps": ["Source Sans 3"],
+                        "mono-data": ["Source Code Pro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "mono-data": ["13px", {"lineHeight": "1", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .grid-pattern {
+            background-image: linear-gradient(to right, rgba(203, 213, 225, 0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(203, 213, 225, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-margin py-sm w-full z-50 fixed top-0 h-[64px]">
+<div class="flex items-center gap-gutter">
+<span class="font-h2 text-h2 font-semibold tracking-tight text-primary dark:text-primary-fixed">AuditControl AI</span>
+<nav class="hidden md:flex items-center gap-md ml-xl">
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1 font-label-caps text-label-caps uppercase" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 font-label-caps text-label-caps uppercase px-sm py-xs" href="#">Logs</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 font-label-caps text-label-caps uppercase px-sm py-xs" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-primary dark:text-primary-fixed-dim font-label-caps text-label-caps bg-surface-container px-sm py-xs rounded">Session: 882-AFX</span>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-all active:scale-95">monitor_heart</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-all active:scale-95">database</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-all active:scale-95">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline fixed left-0 top-[64px] bottom-0 flex flex-col w-64 z-40">
+<div class="p-margin border-b border-outline-variant">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-primary leading-none">Audit Workflow</h3>
+<p class="text-on-surface-variant font-body-sm text-body-sm">v2.4.0-stable</p>
+</div>
+</div>
+<button class="w-full mt-gutter bg-primary text-on-primary font-label-caps text-label-caps py-sm px-md rounded-lg flex items-center justify-center gap-sm active:translate-x-1 transition-all duration-150 hover:opacity-90">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Audit
+            </button>
+</div>
+<nav class="flex-1 py-md">
+<a class="flex items-center gap-md px-margin py-md bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary border-l-4 border-secondary font-bold transition-all duration-150 active:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-caps text-label-caps uppercase">Session Configuration</span>
+</a>
+<a class="flex items-center gap-md px-margin py-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all duration-150 active:translate-x-1" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="font-label-caps text-label-caps uppercase">Source Upload</span>
+</a>
+<a class="flex items-center gap-md px-margin py-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all duration-150 active:translate-x-1" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps text-label-caps uppercase">Audit Engine</span>
+</a>
+<a class="flex items-center gap-md px-margin py-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all duration-150 active:translate-x-1" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps uppercase">Analysis Results</span>
+</a>
+</nav>
+<div class="p-margin mt-auto">
+<div class="bg-surface-container-high p-md rounded-xl border border-outline-variant flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium uppercase tracking-wider">System Operational</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-[64px] min-h-[calc(100vh-64px)] grid-pattern p-xl relative overflow-hidden">
+<!-- Background Graphic Element -->
+<div class="absolute -right-20 -top-20 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[400px] text-primary">security</span>
+</div>
+<div class="max-w-5xl mx-auto">
+<div class="mb-xl">
+<nav class="flex items-center gap-sm text-on-surface-variant mb-md">
+<span class="font-label-caps text-label-caps uppercase">Wizard</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold">Start Session</span>
+</nav>
+<h1 class="font-h1 text-h1 text-on-background mb-xs">Start Session</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Initialize your secure environment to begin the automated compliance verification process. This session will act as the container for all telemetry and source code analysis.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-stretch">
+<!-- Initialization Card -->
+<div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-md mb-xl">
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-h1" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-primary">New Audit Initialization</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure environment parameters and allocate resources.</p>
+</div>
+</div>
+<div class="space-y-xl mb-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest block">Audit Template</label>
+<select class="w-full bg-surface border border-outline-variant rounded p-sm font-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+<option>ISO 27001 Compliance</option>
+<option>SOC 2 Type II Verification</option>
+<option>HIPAA Security Rule</option>
+<option>GDPR Data Privacy</option>
+</select>
+</div>
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest block">Priority Level</label>
+<div class="flex gap-xs">
+<button class="flex-1 py-sm px-md border border-outline-variant rounded hover:bg-surface-container font-body-md">Standard</button>
+<button class="flex-1 py-sm px-md border-2 border-primary bg-primary-container text-on-primary-container rounded font-bold font-body-md">High</button>
+<button class="flex-1 py-sm px-md border border-outline-variant rounded hover:bg-surface-container font-body-md">Critical</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-xl mt-xl flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Encrypted session vault ready</span>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary font-h3 text-h3 py-md px-xl rounded-lg shadow-lg active:scale-95 transition-all flex items-center gap-md">
+                            Create New Session
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Session ID Sidebar Info -->
+<div class="md:col-span-4 space-y-gutter">
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-lg">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest block mb-md">Current Session Token</label>
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-md flex items-center justify-between mb-sm group">
+<code class="font-mono-data text-mono-data text-primary font-bold">882-AFX-9941-K</code>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">Share this ID with authorized team members for collaborative auditing.</p>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-32 object-cover" data-alt="A macro close-up of high-tech circuitry and server room hardware illuminated by cool teal and white neon lights. The aesthetic is clean, clinical, and futuristic, representing the control room core of a secure auditing system. Soft lighting highlights the precision-engineered components, creating an atmosphere of absolute reliability and technical mastery consistent with a light-mode enterprise interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-EH5wfitsGoV_5vFIp8FXlos5v62VfMx2kv-nPMYpjAf6RkdO3v8s6gX9JpiytDBQIhJJ8cOgUo5vKBLkaiG3Fz7WR0RHkAMHdFBtQ3TUs0PZkP8czJXP7-JsGOrLu4i4rX6jwbnPgVySExtKxOiiXTzUJizRa_cnMyLppWbGCu9xWajdO7r1Hq77dutG0N6SsFZyWJgrkTT5Ub4HT5yV-lM0GT86_rqG5a-AAKhm_OY7Fhcp7C1DkizcuupZJ1RfaIEyZAH5iIUw"/>
+<div class="p-lg">
+<h4 class="font-h3 text-h3 text-on-background mb-xs">Active Monitor</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The AI engine is currently indexing global compliance standards for real-time delta matching.</p>
+</div>
+</div>
+<!-- Small KPI Stats -->
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-high p-md rounded-xl border border-outline-variant">
+<span class="font-label-caps text-label-caps uppercase block text-on-surface-variant">Engine Latency</span>
+<span class="font-h2 text-h2 text-on-background font-bold">14ms</span>
+</div>
+<div class="bg-surface-container-high p-md rounded-xl border border-outline-variant">
+<span class="font-label-caps text-label-caps uppercase block text-on-surface-variant">Secure Nodes</span>
+<span class="font-h2 text-h2 text-secondary font-bold">1,204</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Disclaimer/Help -->
+<div class="mt-xl flex items-center justify-center gap-xl opacity-60">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-md">lock</span>
+<span class="font-label-caps text-label-caps uppercase">AES-256 Encrypted</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-md">cloud_done</span>
+<span class="font-label-caps text-label-caps uppercase">Distributed Backup</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-md">policy</span>
+<span class="font-label-caps text-label-caps uppercase">Compliance Ledger</span>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB - Suppressed on this transactional screen as per instructions -->
+</body></html>

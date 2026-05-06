@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Source+Sans+3:wght@400;600;700&amp;family=Source+Code+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 2px;
+    }
+    .bg-grid-pattern {
+      background-image: linear-gradient(to right, rgba(203, 213, 225, 0.1) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(203, 213, 225, 0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#00685f",
+            "error-container": "#ffdad6",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#fffbff",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#00714d",
+            "primary-fixed-dim": "#6bd8cb",
+            "tertiary-fixed-dim": "#ffb59a",
+            "on-secondary-fixed": "#002113",
+            "on-error": "#ffffff",
+            "tertiary": "#924628",
+            "outline-variant": "#bcc9c6",
+            "primary-fixed": "#89f5e7",
+            "surface-variant": "#d3e4fe",
+            "on-primary-fixed-variant": "#005049",
+            "surface-container": "#e5eeff",
+            "primary-container": "#008378",
+            "inverse-on-surface": "#eaf1ff",
+            "surface": "#f8f9ff",
+            "inverse-primary": "#6bd8cb",
+            "surface-dim": "#cbdbf5",
+            "surface-bright": "#f8f9ff",
+            "surface-container-high": "#dce9ff",
+            "on-surface-variant": "#3d4947",
+            "on-primary-fixed": "#00201d",
+            "on-tertiary-fixed": "#370e00",
+            "secondary": "#006c49",
+            "on-background": "#0b1c30",
+            "tertiary-container": "#b05e3d",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#ffdbce",
+            "surface-container-low": "#eff4ff",
+            "on-tertiary-fixed-variant": "#773215",
+            "on-secondary-fixed-variant": "#005236",
+            "on-primary-container": "#f4fffc",
+            "secondary-fixed-dim": "#4edea3",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#213145",
+            "outline": "#6d7a77",
+            "secondary-container": "#6cf8bb",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed": "#6ffbbe",
+            "surface-tint": "#006a61",
+            "on-surface": "#0b1c30"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "xl": "48px",
+            "xs": "4px",
+            "base": "4px",
+            "sm": "8px",
+            "gutter": "16px",
+            "margin": "24px",
+            "lg": "24px",
+            "grid_columns": "12",
+            "md": "16px"
+          },
+          "fontFamily": {
+            "body-md": ["Source Sans 3"],
+            "body-lg": ["Source Sans 3"],
+            "body-sm": ["Source Sans 3"],
+            "h2": ["Sora"],
+            "h3": ["Sora"],
+            "h1": ["Sora"],
+            "label-caps": ["Source Sans 3"],
+            "mono-data": ["Source Code Pro"]
+          },
+          "fontSize": {
+            "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+            "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "body-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+            "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+            "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+            "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "mono-data": ["13px", {"lineHeight": "1", "fontWeight": "500"}]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background font-body-md text-on-surface overflow-hidden">
+<nav class="bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-margin py-sm w-full z-50 fixed top-0">
+<div class="flex items-center gap-md">
+<span class="font-h2 text-h2 font-semibold tracking-tight text-primary">AuditControl AI</span>
+<div class="h-6 w-px bg-outline-variant mx-sm"></div>
+<div class="flex gap-lg">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 px-sm py-1" href="#">Dashboard</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high transition-colors duration-150 px-sm py-1" href="#">Logs</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#">Reports</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="bg-surface-container px-sm py-1 rounded-DEFAULT">
+<span class="font-label-caps text-label-caps text-primary">Session: 882-AFX</span>
+</div>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-1 cursor-pointer">monitor_heart</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-1 cursor-pointer">database</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-1 cursor-pointer">account_circle</span>
+</div>
+</div>
+</nav>
+<aside class="fixed left-0 top-[64px] bottom-0 flex flex-col w-64 z-40 bg-surface-container-low border-r border-outline-variant">
+<div class="p-margin border-b border-outline-variant">
+<h3 class="font-h3 text-h3 text-primary">Audit Workflow</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant">v2.4.0-stable</p>
+</div>
+<div class="flex-1 overflow-y-auto py-md">
+<div class="flex flex-col gap-xs px-sm">
+<div class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-caps text-label-caps">Session Configuration</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="font-label-caps text-label-caps">Source Upload</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high cursor-pointer transition-all duration-150">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-label-caps text-label-caps">Audit Engine</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm rounded-DEFAULT bg-secondary-container text-on-secondary-container border-l-4 border-secondary font-bold cursor-pointer translate-x-1">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analysis Results</span>
+</div>
+</div>
+</div>
+<div class="p-margin">
+<button class="w-full bg-primary text-on-primary py-md font-label-caps text-label-caps rounded-DEFAULT active:scale-95 transition-transform duration-150">New Audit</button>
+</div>
+</aside>
+<main class="ml-64 mt-[64px] h-[calc(100vh-64px)] overflow-y-auto bg-grid-pattern p-margin custom-scrollbar">
+<div class="max-w-[1440px] mx-auto space-y-lg pb-xl">
+<header class="flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-sm mb-xs">
+<span class="font-label-caps text-label-caps text-outline">SESSION 882-AFX</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-label-caps text-label-caps text-outline">ENGINE COMPLETED</span>
+</nav>
+<h1 class="font-h1 text-h1 text-on-surface">Audit Results</h1>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-md py-sm border border-outline text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">refresh</span> RE-RUN ANALYSIS
+          </button>
+<button class="flex items-center gap-sm px-md py-sm bg-primary text-on-primary font-label-caps text-label-caps hover:brightness-110 transition-colors">
+<span class="material-symbols-outlined">done_all</span> FINALIZE REPORT
+          </button>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg relative overflow-hidden group">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline">TOTAL FINDINGS</span>
+<span class="material-symbols-outlined text-primary">search_check</span>
+</div>
+<div class="text-[40px] font-h1 text-on-surface leading-tight">124</div>
+<div class="flex items-center gap-xs mt-sm">
+<span class="text-secondary font-bold">+12%</span>
+<span class="text-outline font-label-caps text-[10px]">VS PREVIOUS SESSION</span>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline">CRITICAL ANOMALIES</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="text-[40px] font-h1 text-error leading-tight">08</div>
+<div class="flex items-center gap-xs mt-sm">
+<span class="text-error font-bold">HIGH RISK</span>
+<span class="text-outline font-label-caps text-[10px]">IMMEDIATE ACTION REQ.</span>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant p-lg">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-outline">CONSOLIDATED SCORE</span>
+<span class="material-symbols-outlined text-on-secondary-container">verified</span>
+</div>
+<div class="text-[40px] font-h1 text-on-secondary-container leading-tight">94.2<span class="text-h3">%</span></div>
+<div class="w-full bg-surface-container h-1 rounded-full mt-sm">
+<div class="bg-secondary h-1 w-[94.2%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-9 space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant">
+<div class="p-md border-b border-outline-variant flex items-center justify-between bg-surface-container-low/30">
+<div class="flex items-center gap-lg">
+<span class="font-h3 text-h3">Findings Inventory</span>
+<div class="flex gap-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline text-md">search</span>
+<input class="pl-xl pr-md py-xs text-body-sm border border-outline-variant rounded-DEFAULT focus:outline-none focus:border-primary w-64 bg-surface" placeholder="Search parameters..." type="text"/>
+</div>
+<select class="text-body-sm border border-outline-variant rounded-DEFAULT px-sm py-xs bg-surface focus:outline-none">
+<option>Severity: All</option>
+<option>Critical Only</option>
+<option>Medium &amp; Low</option>
+</select>
+<select class="text-body-sm border border-outline-variant rounded-DEFAULT px-sm py-xs bg-surface focus:outline-none">
+<option>Status: All</option>
+<option>Pending</option>
+<option>Accepted</option>
+<option>Flagged</option>
+</select>
+</div>
+</div>
+<button class="text-primary hover:bg-primary/10 px-sm py-xs font-label-caps text-label-caps transition-colors">EXPORT LIST</button>
+</div>
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="p-md font-label-caps text-label-caps text-outline border-b border-outline-variant">ID</th>
+<th class="p-md font-label-caps text-label-caps text-outline border-b border-outline-variant">FINDING DESCRIPTION</th>
+<th class="p-md font-label-caps text-label-caps text-outline border-b border-outline-variant">SEVERITY</th>
+<th class="p-md font-label-caps text-label-caps text-outline border-b border-outline-variant">STATUS</th>
+<th class="p-md font-label-caps text-label-caps text-outline border-b border-outline-variant">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="text-body-sm">
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="p-md font-mono-data text-mono-data border-b border-outline-variant">F-882-01</td>
+<td class="p-md border-b border-outline-variant">
+<div class="font-bold">Missing Variance Documentation</div>
+<div class="text-outline text-xs">Section 4.2.1: Transaction delta exceeds 5% threshold without justification.</div>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="px-sm py-xs bg-error-container text-on-error-container rounded-DEFAULT text-[10px] font-bold">CRITICAL</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="flex items-center gap-xs text-on-surface-variant"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Pending</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<button class="material-symbols-outlined text-primary hover:bg-primary/10 rounded-full p-1">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="p-md font-mono-data text-mono-data border-b border-outline-variant">F-882-02</td>
+<td class="p-md border-b border-outline-variant">
+<div class="font-bold">Unauthenticated Metadata Change</div>
+<div class="text-outline text-xs">Audit log indicates field 'Source_ID' was modified by system process.</div>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-DEFAULT text-[10px] font-bold">MEDIUM</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="flex items-center gap-xs text-on-surface-variant"><span class="w-2 h-2 rounded-full bg-secondary"></span> Accepted</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<button class="material-symbols-outlined text-primary hover:bg-primary/10 rounded-full p-1">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors group">
+<td class="p-md font-mono-data text-mono-data border-b border-outline-variant">F-882-03</td>
+<td class="p-md border-b border-outline-variant">
+<div class="font-bold">Duplicate Entry Detected</div>
+<div class="text-outline text-xs">Matching hash found in previous quarter's ledger (Ref: Q3-F29).</div>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="px-sm py-xs bg-surface-container text-on-surface-variant rounded-DEFAULT text-[10px] font-bold">LOW</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<span class="flex items-center gap-xs text-on-surface-variant"><span class="w-2 h-2 rounded-full bg-outline"></span> Flagged</span>
+</td>
+<td class="p-md border-b border-outline-variant">
+<button class="material-symbols-outlined text-primary hover:bg-primary/10 rounded-full p-1">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant">
+<div class="p-md border-b border-outline-variant bg-surface-container-low/30 flex items-center gap-sm">
+<span class="material-symbols-outlined text-md">history</span>
+<span class="font-h3 text-h3">Audit Changelog &amp; Timeline</span>
+</div>
+<div class="p-md space-y-md">
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary mt-1"></div>
+<div class="w-px flex-1 bg-outline-variant"></div>
+</div>
+<div>
+<p class="text-body-sm font-bold text-on-surface">Analysis Engine Step 4 Completed</p>
+<p class="text-[12px] text-outline">14:22:10 - Engine version 2.4.0-stable</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-outline mt-1"></div>
+<div class="w-px flex-1 bg-outline-variant"></div>
+</div>
+<div>
+<p class="text-body-sm text-on-surface">Finding F-882-02 flagged for auto-acceptance by Rule Set A</p>
+<p class="text-[12px] text-outline">14:21:45 - System Automation</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-outline mt-1"></div>
+</div>
+<div>
+<p class="text-body-sm text-on-surface">Data ingestion finalized (8.4GB processed)</p>
+<p class="text-[12px] text-outline">14:15:30 - Data Connector v1.2</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-3 space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-md">
+<h4 class="font-label-caps text-label-caps text-outline mb-md">DOWNLOAD ASSETS</h4>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-sm border border-outline-variant hover:bg-surface-container group cursor-pointer transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">description</span>
+<div>
+<div class="text-body-sm font-bold">Issue Log</div>
+<div class="text-[10px] text-outline">XLSX • 2.4 MB</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</div>
+<div class="flex items-center justify-between p-sm border border-outline-variant hover:bg-surface-container group cursor-pointer transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<div>
+<div class="text-body-sm font-bold">Risk Register</div>
+<div class="text-[10px] text-outline">PDF • 1.1 MB</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</div>
+<div class="flex items-center justify-between p-sm border border-outline-variant hover:bg-surface-container group cursor-pointer transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">note</span>
+<div>
+<div class="text-body-sm font-bold">Audit Memo</div>
+<div class="text-[10px] text-outline">DOCX • 450 KB</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary">download</span>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 border border-primary/20 p-md">
+<h4 class="font-label-caps text-label-caps text-primary mb-sm">AI ASSISTANT INSIGHT</h4>
+<p class="text-body-sm text-on-surface-variant italic">"Anomalies in this session correlate 85% with the Q3-2023 infrastructure shift. Suggest reviewing cross-ledger reconciliation rules."</p>
+<div class="mt-md flex justify-end">
+<button class="text-body-sm font-bold text-primary flex items-center gap-xs">VIEW FULL REPORT <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<div class="relative aspect-video w-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="A professional data analytics dashboard visualization showing complex network graphs and heatmaps in a high-tech control room environment. The image is rendered in a minimalist light-mode aesthetic with teal and emerald green glowing accents, emphasizing precision, security, and technical authority in a corporate modernist style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXuzdEO-QjrNP3xjE06HZK18gvXpdtXYYkBiRVaIkNLK1g13gJw_JbI-TU6V5MnhF-aIIiq5JV4H0iEmENuSwW0zbTl9CI1JJukH5pnyhJd5Zv-b7VAFQJIHJYH0GRWQr48waYOoqLb8mUUzHx2KJb_X7I-z3P1Mup5yzPlCFwzFwTum4XRyTkbhzmTN1DTF-kt_ytOa7A8KBpLjW9m2DQ6ZSD6FxomdkIBpnqcyuG6rLhrGUFEDJFCHP9mswG6Jc-gCAxA98PS1lz"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<span class="bg-surface-container-lowest/90 px-md py-sm font-label-caps text-label-caps border border-outline-variant">DATA TOPOLOGY VIEW</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Feedback Modal Mockup (Overlaid) -->
+<div class="fixed inset-0 z-[60] flex items-center justify-center p-margin">
+<div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm"></div>
+<div class="relative bg-surface-container-lowest border border-outline-variant w-full max-w-md shadow-2xl">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">feedback</span>
+<h2 class="font-h3 text-h3">Decision Required</h2>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-on-surface">close</button>
+</div>
+<div class="p-lg space-y-md">
+<div class="p-md bg-surface-container-low border border-outline-variant">
+<div class="font-label-caps text-label-caps text-outline mb-xs">FINDING F-882-01</div>
+<div class="text-body-md font-bold">Missing Variance Documentation</div>
+<div class="text-body-sm mt-xs">Are you sure you want to accept this finding into the final report? This will trigger an automatic notification to the department head.</div>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-outline block mb-sm">OPTIONAL COMMENT</label>
+<textarea class="w-full h-24 border border-outline-variant p-md text-body-sm focus:outline-none focus:border-primary bg-surface" placeholder="Enter justification for decision..."></textarea>
+</div>
+</div>
+<div class="p-lg border-t border-outline-variant flex justify-end gap-sm">
+<button class="px-md py-sm border border-outline text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">
+          REJECT FINDING
+        </button>
+<button class="px-md py-sm bg-primary text-on-primary font-label-caps text-label-caps hover:brightness-110 transition-colors">
+          ACCEPT &amp; RECORD
+        </button>
+</div>
+</div>
+</div>
+</body></html>

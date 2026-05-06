@@ -1,0 +1,125 @@
+.topBar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-xl);
+  background: var(--color-surface-lowest);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.brandTitle {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.navLink {
+  font-size: var(--font-size-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  padding: 4px 8px;
+  border-bottom: 2px solid transparent;
+}
+
+.navLinkActive {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 700;
+}
+
+.statusGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.baseUrl {
+  max-width: 240px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.health {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-container);
+  font-size: var(--font-size-body-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.healthDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-outline);
+}
+
+.healthOk .healthDot {
+  background: var(--color-secondary);
+}
+
+.healthWarn .healthDot {
+  background: var(--color-tertiary);
+}
+
+.session {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-container-high);
+  font-size: var(--font-size-body-sm);
+}
+
+.sessionLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-on-surface-variant);
+}
+
+.sessionValue {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.copyButton {
+  border: 1px solid var(--color-outline-variant);
+  background: transparent;
+  color: var(--color-on-surface);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  font-size: var(--font-size-body-sm);
+}
+
+.copyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

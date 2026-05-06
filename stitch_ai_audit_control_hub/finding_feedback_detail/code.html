@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuditAI Pro - Finding Deep Dive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Source+Sans+3:wght@400;500;700&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, rgba(0, 106, 97, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 106, 97, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#006a61",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-container": "#6cf8bb",
+                      "primary": "#00685f",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#ffb59a",
+                      "on-tertiary-fixed-variant": "#773215",
+                      "surface-container-highest": "#d3e4fe",
+                      "on-surface": "#0b1c30",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "inverse-primary": "#6bd8cb",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-fixed": "#ffdbce",
+                      "on-background": "#0b1c30",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#f8f9ff",
+                      "surface-container-high": "#dce9ff",
+                      "primary-fixed-dim": "#6bd8cb",
+                      "tertiary": "#924628",
+                      "surface-variant": "#d3e4fe",
+                      "on-tertiary-fixed": "#370e00",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary-fixed": "#89f5e7",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container-low": "#eff4ff",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-primary-fixed-variant": "#005049",
+                      "on-primary-container": "#f4fffc",
+                      "inverse-surface": "#213145",
+                      "background": "#f8f9ff",
+                      "on-primary-fixed": "#00201d",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#002113",
+                      "error-container": "#ffdad6",
+                      "secondary": "#006c49",
+                      "tertiary-container": "#b05e3d",
+                      "on-surface-variant": "#3d4947",
+                      "primary-container": "#008378",
+                      "on-secondary-container": "#00714d",
+                      "surface-bright": "#f8f9ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "base": "4px",
+                      "gutter": "16px",
+                      "margin": "24px",
+                      "md": "16px",
+                      "xl": "48px",
+                      "grid_columns": "12"
+              },
+              "fontFamily": {
+                      "h3": ["Sora"],
+                      "h1": ["Sora"],
+                      "h2": ["Sora"],
+                      "body-sm": ["Source Sans 3"],
+                      "body-lg": ["Source Sans 3"],
+                      "mono-data": ["Source Code Pro"],
+                      "body-md": ["Source Sans 3"],
+                      "label-caps": ["Source Sans 3"]
+              },
+              "fontSize": {
+                      "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "body-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex">
+<!-- SideNavBar (Suppressed for focused detail view but mapped for shell consistency) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md z-40 bg-surface border-r border-outline-variant w-64 hidden md:flex">
+<div class="mb-xl">
+<h2 class="font-h2 text-h2 font-bold text-primary">AuditAI Pro</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mt-xs tracking-widest">Control Center</p>
+</div>
+<nav class="flex flex-col gap-sm flex-1">
+<div class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high transition-all duration-150 rounded-xl cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-label-caps text-label-caps">Session Setup</span>
+</div>
+<div class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high transition-all duration-150 rounded-xl cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="font-label-caps text-label-caps">Document Vault</span>
+</div>
+<div class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high transition-all duration-150 rounded-xl cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined">play_circle</span>
+<span class="font-label-caps text-label-caps">Audit Execution</span>
+</div>
+<div class="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-xl px-md py-sm translate-x-1 transition-transform duration-150">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Result Analysis</span>
+</div>
+<div class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high transition-all duration-150 rounded-xl cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-caps text-label-caps">Final Reports</span>
+</div>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant">
+<div class="flex items-center gap-md text-on-surface-variant px-md py-sm">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label-caps text-label-caps">System Health</span>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen relative bg-grid-pattern">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-gutter h-16 bg-surface-container border-b border-outline-variant sticky top-0 z-30">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant p-sm rounded-full transition-colors">arrow_back</button>
+<div>
+<h1 class="font-h3 text-h3 font-semibold text-primary">Finding Investigation</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Session ID: AUD-2024-88A</p>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="hidden lg:flex items-center bg-surface px-md py-xs rounded border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-48" placeholder="Search findings..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">health_and_safety</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">settings</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center ml-sm overflow-hidden border border-primary">
+<img alt="Auditor Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate auditor in a high-tech control room environment. The individual is wearing a crisp white shirt and charcoal vest, looking directly at the camera with a confident and focused expression. The background is softly blurred, showing glowing blue and green data interfaces on sleek monitor screens, creating an atmosphere of expert technical oversight and professional precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9z8ZI-l2aK5G_mdqjh14LxNA2uWRrtGu1Kdz0rxijw_5_tHNFW_CnnY5OAG1jwvVfg8LhyTQMAqZIl4LsYZ2jG3B7tXbJjI2J-uxpRjPkyxiyRvlO5iR9CVQhVbHRhyEHo4Ssfe0V5EmiemYigPV32b_jAnssAk3s41VnAVDpepxMcAFW31r6QGum9x8WGLGCMiWhQ10YAG_ATZ9BKbBLowebDeVyXd5sxViWuVwPPxb9P1OQpbogT3SId1Scf_U67HtTmi8TfuAj"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<section class="p-margin max-w-6xl mx-auto w-full grid grid-cols-12 gap-lg">
+<!-- Left Column: Finding Details -->
+<div class="col-span-12 lg:col-span-8 space-y-lg">
+<!-- Finding Header Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg shadow-sm">
+<div class="flex flex-wrap justify-between items-start gap-md mb-md">
+<div>
+<span class="font-mono-data text-mono-data bg-surface-variant text-on-surface-variant px-sm py-xs rounded border border-outline-variant">FINDING ID: F-882-01</span>
+<h2 class="font-h2 text-h2 mt-sm text-on-surface">Missing Variance Documentation in Q4 Ledger</h2>
+</div>
+<div class="flex gap-sm">
+<span class="flex items-center gap-xs px-md py-xs bg-error-container text-on-error-container rounded text-label-caps font-label-caps">
+<span class="material-symbols-outlined text-[14px]">warning</span> HIGH SEVERITY
+                            </span>
+<span class="flex items-center gap-xs px-md py-xs bg-surface-container-high text-on-surface-variant rounded text-label-caps font-label-caps border border-outline-variant">
+<span class="material-symbols-outlined text-[14px]">pending</span> PENDING
+                            </span>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        During the automated ledger reconciliation, the AI engine detected 14 line items in the Q4 Expense Ledger exceeding the standard $5,000 threshold without the required supplemental variance justification forms. This violation contravenes the Internal Controls Policy (Section 4.2).
+                    </p>
+</div>
+<!-- Evidence Section -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-h3 text-h3 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">article</span> Evidence &amp; Sources
+                        </h3>
+<button class="text-primary font-label-caps text-label-caps hover:underline">VIEW ALL SOURCES</button>
+</div>
+<div class="space-y-sm">
+<!-- Evidence Item -->
+<div class="flex items-center justify-between p-md bg-surface border border-outline-variant rounded hover:bg-surface-container-high transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-variant rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Q4_ledger_final_v2.xlsx</p>
+<p class="font-mono-data text-mono-data text-on-surface-variant">Line 1,422 • Sheet: Expenses_Global</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">open_in_new</span>
+</div>
+<!-- Evidence Item -->
+<div class="flex items-center justify-between p-md bg-surface border border-outline-variant rounded hover:bg-surface-container-high transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-variant rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Internal_Control_Policy_2024.pdf</p>
+<p class="font-mono-data text-mono-data text-on-surface-variant">Page 42 • Section 4.2: Variance Reporting</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">open_in_new</span>
+</div>
+</div>
+</div>
+<!-- Action Form -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg shadow-sm">
+<h3 class="font-h3 text-h3 mb-md">Audit Decision</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-lg">
+<label class="relative flex flex-col p-md border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+<input checked="" class="sr-only" name="action" type="radio"/>
+<span class="material-symbols-outlined text-primary mb-sm">check_circle</span>
+<span class="font-h3 text-h3 text-primary">ACCEPT</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Confirm finding is valid.</span>
+</label>
+<label class="relative flex flex-col p-md border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all has-[:checked]:border-error has-[:checked]:bg-error/5">
+<input class="sr-only" name="action" type="radio"/>
+<span class="material-symbols-outlined text-error mb-sm">cancel</span>
+<span class="font-h3 text-h3 text-error">REJECT</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Dispute finding validity.</span>
+</label>
+<label class="relative flex flex-col p-md border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all has-[:checked]:border-tertiary has-[:checked]:bg-tertiary/5">
+<input class="sr-only" name="action" type="radio"/>
+<span class="material-symbols-outlined text-tertiary mb-sm">edit_note</span>
+<span class="font-h3 text-h3 text-tertiary">MODIFY</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Adjust severity/details.</span>
+</label>
+</div>
+<div class="space-y-sm">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Justification Comment</label>
+<textarea class="w-full h-32 bg-surface border border-outline-variant rounded-lg p-md focus:ring-1 focus:ring-primary focus:border-primary font-body-md" placeholder="Enter justification for decision..."></textarea>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">This comment will be permanently recorded in the audit trail.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Stats -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<!-- Confidence Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg shadow-sm">
+<div class="text-center">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-sm">AI Engine Confidence</p>
+<div class="relative inline-flex items-center justify-center p-md">
+<!-- Circular Progress Placeholder -->
+<svg class="w-32 h-32 transform -rotate-90">
+<circle class="text-surface-container-high" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="64" cy="64" fill="transparent" r="56" stroke="currentColor" stroke-dasharray="351.8" stroke-dashoffset="21.1" stroke-width="8"></circle>
+</svg>
+<span class="absolute font-h1 text-h1 text-primary">94%</span>
+</div>
+<p class="mt-md font-body-sm text-body-sm text-on-surface-variant">High confidence based on pattern matching in 14 discrete occurrences across 2 files.</p>
+</div>
+<div class="mt-lg pt-lg border-t border-outline-variant space-y-md">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">Pattern Score</span>
+<span class="font-mono-data text-mono-data text-on-surface">0.98</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-on-surface-variant">Historical Match</span>
+<span class="font-mono-data text-mono-data text-on-surface">88.2%</span>
+</div>
+</div>
+</div>
+<!-- Analysis Summary -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-lg shadow-sm">
+<h3 class="font-h3 text-h3 mb-md">Audit Context</h3>
+<div class="space-y-md">
+<div class="p-md bg-surface rounded">
+<p class="font-label-caps text-label-caps text-on-surface-variant">TOTAL IMPACT</p>
+<p class="font-h2 text-h2 text-error">$142,500.00</p>
+<p class="font-body-sm text-on-surface-variant">Estimated unverified variance</p>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<div class="flex-1">
+<p class="font-body-sm text-on-surface-variant">Last Reviewed</p>
+<p class="font-body-md font-bold">N/A (Initial Auto-Scan)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Insight -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden h-48 relative">
+<img alt="Data Visualization" class="w-full h-full object-cover" data-alt="A clean, high-contrast data visualization showing a series of emerald green bar charts representing expense compliance over four quarters. One bar in the fourth quarter is highlighted with a subtle red outline and a soft glow, indicating a deviation or finding. The visual style is minimalist and corporate, utilizing the primary teal palette on a crisp white background with faint grid lines to emphasize precision and technical analysis." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpTCDn1BDIM7uC5Tc0QMexZo_EnwcTJHObRXJG1IqLctQtrhdnlKni1GBU6siClOPKpnjDlYtKVCV-T2wpSNUxtsTMDa5ZkWdVH5bS5H6V38q4RMBUbMyS8v-gPQ_1vqI451r9yCiZ-xtm9V0d5qzl4B-gj6J-omgYDlaoIYoj3wxB6gZLlV8sFGGRS-EX1RF6mgoLetCT2rI3jpQUuWlBrxSd_1J_m7Y_H0cQIlmvjBWR7WlKPpxJQcMX54rsJt3k9lSkQ7UPW0oc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-md">
+<p class="text-white font-label-caps text-label-caps uppercase tracking-wider">Q4 Expense Distribution Anomalies</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Actions (Docked) -->
+<footer class="mt-auto border-t border-outline-variant bg-surface-container-lowest p-gutter flex justify-between items-center sticky bottom-0 z-30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+<p class="font-body-sm text-on-surface-variant">Decision required to progress to Final Report generation.</p>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-lg py-sm border border-outline-variant text-on-surface-variant font-h3 text-h3 rounded hover:bg-surface-variant transition-all active:scale-[0.99]">Cancel</button>
+<button class="px-lg py-sm bg-primary text-white font-h3 text-h3 rounded hover:bg-primary-container transition-all active:scale-[0.99] flex items-center gap-sm">
+                    Submit Decision <span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</footer>
+</main>
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuditControl AI - Upload Documents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#00685f",
+                        "error-container": "#ffdad6",
+                        "background": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#fffbff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary-fixed-dim": "#6bd8cb",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary-fixed": "#002113",
+                        "on-error": "#ffffff",
+                        "tertiary": "#924628",
+                        "outline-variant": "#bcc9c6",
+                        "primary-fixed": "#89f5e7",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed-variant": "#005049",
+                        "surface-container": "#e5eeff",
+                        "primary-container": "#008378",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface": "#f8f9ff",
+                        "inverse-primary": "#6bd8cb",
+                        "surface-dim": "#cbdbf5",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#3d4947",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-fixed": "#370e00",
+                        "secondary": "#006c49",
+                        "on-background": "#0b1c30",
+                        "tertiary-container": "#b05e3d",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed-variant": "#773215",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-container": "#f4fffc",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#213145",
+                        "outline": "#6d7a77",
+                        "secondary-container": "#6cf8bb",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#006a61",
+                        "on-surface": "#0b1c30"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "margin": "24px",
+                        "lg": "24px",
+                        "grid_columns": "12",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Source Sans 3"],
+                        "body-lg": ["Source Sans 3"],
+                        "body-sm": ["Source Sans 3"],
+                        "h2": ["Sora"],
+                        "h3": ["Sora"],
+                        "h1": ["Sora"],
+                        "label-caps": ["Source Sans 3"],
+                        "mono-data": ["Source Code Pro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "mono-data": ["13px", {"lineHeight": "1", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #f8f9ff; background-image: radial-gradient(circle at 2px 2px, rgba(0,0,0,0.03) 1px, transparent 0); background-size: 24px 24px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-margin py-sm w-full z-50 fixed top-0 left-0">
+<div class="flex items-center gap-gutter">
+<span class="font-h2 text-h2 font-semibold tracking-tight text-primary dark:text-primary-fixed">AuditControl AI</span>
+<nav class="hidden md:flex gap-gutter items-center ml-xl">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 px-sm py-1" href="#">Dashboard</a>
+<a class="font-label-caps text-label-caps text-primary dark:text-primary-fixed border-b-2 border-primary dark:border-primary-fixed pb-1" href="#">Logs</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors duration-150 px-sm py-1" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-mono-data text-mono-data bg-surface-container text-on-surface-variant px-sm py-1 rounded">Session: 882-AFX</span>
+<div class="flex gap-sm">
+<button class="material-symbols-outlined p-sm rounded hover:bg-surface-container-high transition-colors">monitor_heart</button>
+<button class="material-symbols-outlined p-sm rounded hover:bg-surface-container-high transition-colors">database</button>
+<button class="material-symbols-outlined p-sm rounded hover:bg-surface-container-high transition-colors">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-[64px] bottom-0 flex flex-col w-64 z-40 bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline">
+<div class="p-margin">
+<div class="flex items-center gap-sm mb-xs">
+<span class="font-h3 text-h3 text-primary">Audit Workflow</span>
+</div>
+<div class="text-on-surface-variant opacity-70 text-[10px] uppercase tracking-widest font-bold mb-xl">v2.4.0-stable</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md p-md rounded-r-full font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+                    Session Configuration
+                </a>
+<a class="flex items-center gap-md p-md rounded-r-full font-label-caps text-label-caps bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary border-l-4 border-secondary font-bold transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+                    Source Upload
+                </a>
+<a class="flex items-center gap-md p-md rounded-r-full font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+                    Audit Engine
+                </a>
+<a class="flex items-center gap-md p-md rounded-r-full font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Analysis Results
+                </a>
+</nav>
+</div>
+<div class="mt-auto p-margin">
+<button class="w-full bg-primary text-on-primary py-md font-label-caps text-label-caps rounded-lg active:scale-95 transition-transform">New Audit</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-[64px] p-xl min-h-screen">
+<!-- Wizard Stepper -->
+<div class="max-w-5xl mx-auto mb-xl">
+<div class="flex items-center justify-between px-gutter">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-[12px] font-bold">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Setup</span>
+</div>
+<div class="flex-1 h-[2px] bg-secondary mx-md"></div>
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full border-2 border-primary text-primary flex items-center justify-center text-[12px] font-bold">2</div>
+<span class="font-label-caps text-label-caps text-primary">Documents</span>
+</div>
+<div class="flex-1 h-[2px] bg-outline-variant mx-md"></div>
+<div class="flex items-center gap-sm opacity-50">
+<div class="w-6 h-6 rounded-full border-2 border-outline text-on-surface-variant flex items-center justify-center text-[12px] font-bold">3</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Process</span>
+</div>
+</div>
+</div>
+<div class="max-w-6xl mx-auto grid grid-cols-12 gap-gutter">
+<!-- Left Column: Header & Drop Zone -->
+<div class="col-span-12 lg:col-span-7 space-y-gutter">
+<header>
+<h1 class="font-h1 text-h1 text-on-surface mb-xs">Upload Documents</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Drag and drop raw audit logs, ledger exports, or system dumps for validation. Maximum file size: 500MB per object.</p>
+</header>
+<!-- Drag & Drop Zone -->
+<div class="bg-surface-container-low border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center text-center gap-md hover:border-primary hover:bg-surface-container transition-all cursor-pointer">
+<div class="w-16 h-16 bg-primary-container/20 rounded-full flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary text-[40px]">upload_file</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-on-surface">Drop files here or click to browse</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Supports .JSON, .CSV, .XML, and .YAML formats</p>
+</div>
+<div class="flex gap-sm mt-md">
+<button class="bg-primary text-on-primary px-xl py-md font-label-caps text-label-caps rounded active:scale-95 transition-transform">Select Files</button>
+<button class="border border-outline text-on-surface px-xl py-md font-label-caps text-label-caps rounded hover:bg-surface-container transition-colors">Import from S3</button>
+</div>
+</div>
+<!-- Active Uploads List -->
+<div class="space-y-sm">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Queue: 3 Pending</h3>
+<!-- Item 1: Validating -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-body-md font-semibold truncate">system_logs_q3_final.json</span>
+<span class="font-label-caps text-label-caps text-primary px-sm py-xs bg-primary-container/20 rounded">VALIDATING</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<div class="flex justify-between mt-xs">
+<span class="text-[10px] font-mono-data text-on-surface-variant">JSON | 42.8 MB</span>
+<span class="text-[10px] font-mono-data text-primary">Checking integrity...</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Ready -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded flex items-center gap-md">
+<div class="w-10 h-10 bg-surface-container-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">table_chart</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<span class="font-body-md font-semibold truncate">ledger_export_001.csv</span>
+<span class="font-label-caps text-label-caps text-secondary px-sm py-xs bg-secondary-container/20 rounded">READY</span>
+</div>
+<div class="flex gap-md mt-xs">
+<span class="text-[10px] font-mono-data text-on-surface-variant">CSV | 1.2 GB (Compressed)</span>
+<span class="text-[10px] font-mono-data text-secondary">Verified &amp; Indexed</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error transition-colors">delete</button>
+</div>
+<!-- Item 3: Error -->
+<div class="bg-surface-container-lowest border border-error/20 p-md rounded flex items-center gap-md">
+<div class="w-10 h-10 bg-error-container/30 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<span class="font-body-md font-semibold truncate">auth_schema_v2.yaml</span>
+<span class="font-label-caps text-label-caps text-error px-sm py-xs bg-error-container/50 rounded">ERROR</span>
+</div>
+<p class="text-[11px] text-error font-medium mt-xs">Syntax Error: Unexpected indentation at line 42. Check file schema.</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">refresh</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Validation Report & Summary -->
+<div class="col-span-12 lg:col-span-5 space-y-gutter">
+<!-- Validation Report Card -->
+<div class="bg-white border border-outline-variant shadow-sm overflow-hidden">
+<div class="bg-surface-container-high px-md py-sm border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-label-caps text-label-caps text-on-surface">PRE-FLIGHT VALIDATION</h4>
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="p-margin space-y-md">
+<div class="flex items-center gap-md">
+<img class="w-20 h-20 object-cover rounded border border-outline-variant" data-alt="A clean, high-contrast data visualization dashboard showing crisp line charts and bar graphs on a bright light-mode background. The aesthetic is technical and professional, using a corporate teal and grey color palette to represent high-stakes financial analysis. The mood is precise and authoritative, perfect for an audit control interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSOghba1fqWDfSL8cjmVu9jl8Js7m7OCqDRrzfazGh9KS4u_cvU3yiAYACBcf3IZ6ZNL2UCp4DEXdKUBWo3v-zhuAgLXQPq-8zLpT-AIAMAunPabTOp3VU-zAjehlS-UWce80soTMNo9PIS8mBJuDqLFIHn-TOpzGqX4IEIGJNkMBLl-bsHcOMvClIdkce3fnZPRRT83OBrjtoFIz0Q0qQN4vlniG2hNDG_sGJ4SbjS_vJfvHwt1RBP-bp_YTsPoabpVi0XAAq9eyO"/>
+<div>
+<h5 class="font-h3 text-h3">Integrity Score: 98.4%</h5>
+<p class="text-body-sm text-on-surface-variant">The engine has successfully parsed 4.2M records across 2 valid files.</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-low p-sm rounded border border-outline-variant">
+<span class="font-label-caps text-[9px] text-on-surface-variant block mb-xs">ANOMALIES FOUND</span>
+<span class="font-mono-data text-h3 text-tertiary">0</span>
+</div>
+<div class="bg-surface-container-low p-sm rounded border border-outline-variant">
+<span class="font-label-caps text-[9px] text-on-surface-variant block mb-xs">SCHEMA MATCH</span>
+<span class="font-mono-data text-h3 text-secondary">99.9%</span>
+</div>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center text-body-sm">
+<span class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span> Ledger Integrity</span>
+<span class="font-mono-data font-bold">PASS</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span> Checksum Verification</span>
+<span class="font-mono-data font-bold">PASS</span>
+</div>
+<div class="flex justify-between items-center text-body-sm opacity-50">
+<span class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-primary"></span> Transaction Pairing</span>
+<span class="font-mono-data font-bold italic">PENDING</span>
+</div>
+</div>
+<div class="pt-sm border-t border-outline-variant mt-sm">
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">"All datasets meet the minimum security threshold for Audit Engine Stage 3."</p>
+</div>
+</div>
+</div>
+<!-- Guidance Info -->
+<div class="bg-primary-container/10 border border-primary-container p-margin rounded-xl">
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<h5 class="font-label-caps text-label-caps text-primary mb-xs">DATA PRIVACY NOTICE</h5>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant">All uploaded files are encrypted at rest using AES-256 and processed in an isolated VPC. Session data is purged automatically 24 hours after report finalization.</p>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-md">
+<button class="flex-1 border border-outline text-on-surface font-label-caps text-label-caps py-md rounded hover:bg-surface-container transition-colors">Save Draft</button>
+<button class="flex-1 bg-primary text-on-primary font-label-caps text-label-caps py-md rounded active:scale-95 transition-transform flex items-center justify-center gap-sm">
+                        Process Files
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden on this screen per instructions) -->
+<!-- Suppression logic applied: No FAB on Details/Transactional screens -->
+</body></html>

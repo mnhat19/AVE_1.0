@@ -1,0 +1,4 @@
+Control ID,Control Description,Test Result,Notes
+C001,Phê duyệt mua hàng,EFFECTIVE,100% đơn hàng được phê duyệt
+C002,Kiểm tra hóa đơn,DEFICIENT,5% hóa đơn không khớp
+C003,Kiểm tra chất lượng,EFFECTIVE,Chất lượng đạt chuẩn
