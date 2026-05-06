@@ -5,17 +5,16 @@ This document explains how the AVE Audit Control Hub repository is prepared for 
 ## Included in the repository
 - Source code for backend and frontend
 - Configuration templates and environment examples
-- Sample audit documents for interim and fieldwork testing
+- Curated sample audit documents for interim and fieldwork testing
 - Product documentation in `docs/`
-- End-to-end test script and sample data generation script
+- Representative sample regression files in `test_data/`
 
 ## Excluded from GitHub
 The following items should not be committed or published:
 - Local Python virtual environment: `.venv/`
 - Runtime output directories: `outputs/`, `uploads/`
 - Environment secrets: `.env`, `.env.*`, `frontend/.env.local`, `frontend/.env.*`
-- Generated sample documents: `sample_audit_documents/INTERIM/`, `sample_audit_documents/FIELDWORK/`
-- Generated test data: `test_data/journal_entries.csv`, `test_data/sop_procurement.docx`, `test_data/trial_balance.xlsx`, `test_data/walkthrough_notes.pdf`
+- Generation support files: `generate_*` scripts and `Stitch_Prompt.md`
 - Local database and generated storage: `*.db`, `*.sqlite`, `*.sqlite3`
 - Logs and temporary files: `*.log`, `*.pyc`, `__pycache__/`
 - Node build artifacts: `frontend/node_modules/`, `frontend/dist/`, `frontend/.vite/`
@@ -24,7 +23,6 @@ The following items should not be committed or published:
 - `api/`, `services/`, `db/`, `config/`, `schemas/`
 - `frontend/src/`, `frontend/package.json`, `frontend/vite.config.ts`
 - `sample_audit_documents/` for demo and onboarding purposes
-- `generate_real_documents_complete.py` and related generators
 - `test_pipeline.py`, `test_data/`, and documentation files
 
 ## Recommended GitHub publish workflow

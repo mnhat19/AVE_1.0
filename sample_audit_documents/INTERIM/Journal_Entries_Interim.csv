@@ -1,0 +1,5 @@
+Date,Reference,Debit,Credit,Description,Amount
+2023-06-01,J001,1000,,Mua văn phòng phẩm,1000
+2023-06-02,J002,,1000,Thanh toán mua hàng,1000
+2023-06-03,J003,500,,Mua thiết bị,500
+2023-06-04,J004,,500,Thanh toán thiết bị,500

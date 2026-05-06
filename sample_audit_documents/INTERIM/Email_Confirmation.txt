@@ -1,0 +1,11 @@
+From: supplier@example.com
+To: procurement@company.com
+Subject: Confirmation of Order
+Date: Mon, 01 Oct 2023 10:00:00 +0000
+
+Dear Procurement Team,
+
+We confirm the order for office supplies amounting to $1000.
+
+Best regards,
+Supplier

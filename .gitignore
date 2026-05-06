@@ -18,18 +18,41 @@ frontend/.env.*
 outputs/
 uploads/
 
-# Generated sample documents
-sample_audit_documents/INTERIM/
-sample_audit_documents/FIELDWORK/
+# Generator scripts and drafts
+generate_*.py
+Stitch_Prompt.md
+README_VI.md
 
-# Generated test data
-test_data/journal_entries.csv
-test_data/sop_procurement.docx
-test_data/trial_balance.xlsx
-test_data/walkthrough_notes.pdf
+# Local environment
+.env
+.env.*
+*.env
+frontend/.env.local
+frontend/.env.*
+
+# Python build artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite
+*.db
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Vite
+frontend/.vite/
 
 # Logs
 *.log
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Node
 node_modules/
