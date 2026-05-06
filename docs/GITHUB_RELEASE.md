@@ -14,6 +14,8 @@ The following items should not be committed or published:
 - Local Python virtual environment: `.venv/`
 - Runtime output directories: `outputs/`, `uploads/`
 - Environment secrets: `.env`, `.env.*`, `frontend/.env.local`, `frontend/.env.*`
+- Generated sample documents: `sample_audit_documents/INTERIM/`, `sample_audit_documents/FIELDWORK/`
+- Generated test data: `test_data/journal_entries.csv`, `test_data/sop_procurement.docx`, `test_data/trial_balance.xlsx`, `test_data/walkthrough_notes.pdf`
 - Local database and generated storage: `*.db`, `*.sqlite`, `*.sqlite3`
 - Logs and temporary files: `*.log`, `*.pyc`, `__pycache__/`
 - Node build artifacts: `frontend/node_modules/`, `frontend/dist/`, `frontend/.vite/`

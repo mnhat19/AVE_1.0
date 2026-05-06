@@ -18,6 +18,16 @@ frontend/.env.*
 outputs/
 uploads/
 
+# Generated sample documents
+sample_audit_documents/INTERIM/
+sample_audit_documents/FIELDWORK/
+
+# Generated test data
+test_data/journal_entries.csv
+test_data/sop_procurement.docx
+test_data/trial_balance.xlsx
+test_data/walkthrough_notes.pdf
+
 # Logs
 *.log
 

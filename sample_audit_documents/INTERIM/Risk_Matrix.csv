@@ -1,4 +1,0 @@
-Risk ID,Risk Description,Probability,Impact,Risk Score,Related Controls
-R001,Mua hàng không cần thiết,0.3,0.7,0.21,Phê duyệt quản lý
-R002,Giá cả không cạnh tranh,0.4,0.6,0.24,Đàm phán giá
-R003,Chất lượng kém,0.2,0.8,0.16,Kiểm tra chất lượng

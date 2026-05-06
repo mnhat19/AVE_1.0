@@ -18,10 +18,15 @@ This folder contains a realistic audit document set for the AI Audit Tool MVP.
 - `PST`: placeholder compatibility sample for parser-failure testing
 
 ## Recommended Test Flow
-1. Upload the minimum complete interim bundle: `sop_procurement.docx`, `walkthrough_notes.pdf`, `risk_matrix.xlsx`.
-2. Upload the minimum complete fieldwork bundle: `journal_entries.csv`, `trial_balance.xlsx`, `lead_schedule.xlsx`, `ageing.csv`, `reconciliation.xlsx`, `confirmation_letter.eml`.
-3. Upload the full mixed bundle to run `BOTH` and verify cross-stage validation.
-4. Upload `edge_cases/` files to confirm corrupted, incomplete, and unsupported-file handling.
+1. Generate sample documents locally by running `python generate_real_documents_complete.py`.
+2. Upload the minimum complete interim bundle: `sop_procurement.docx`, `walkthrough_notes.pdf`, `risk_matrix.xlsx`.
+3. Upload the minimum complete fieldwork bundle: `journal_entries.csv`, `trial_balance.xlsx`, `lead_schedule.xlsx`, `ageing.csv`, `reconciliation.xlsx`, `confirmation_letter.eml`.
+4. Upload the full mixed bundle to run `BOTH` and verify cross-stage validation.
+5. Upload `edge_cases/` files to confirm corrupted, incomplete, and unsupported-file handling.
+
+## Notes
+- The full `INTERIM/` and `FIELDWORK/` datasets are generated assets and are not committed to the repository.
+- `edge_cases/` remains in the repo for validating error-handling behavior.
 
 ## Notes
 - The included PST sample is a compatibility placeholder because the repository does not ship PST authoring tooling.

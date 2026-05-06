@@ -14,7 +14,7 @@ It combines a FastAPI backend, a React + Vite frontend, realistic sample data ge
 - `services/` — document extractor, normalizer, file handler, output generator.
 - `db/` — SQLite models and persistence glue.
 - `frontend/` — React + Vite audit dashboard UI.
-- `sample_audit_documents/` — realistic interim and fieldwork document examples.
+- `sample_audit_documents/README.md` — sample data guidance and edge-case templates.
 - `generate_real_documents_complete.py` — sample dataset generation.
 - `test_pipeline.py` — end-to-end CLI regression test.
 - `docs/` — product requirements, test scenarios, and release note guidance.
@@ -77,10 +77,23 @@ Then open `http://localhost:5173`.
 6. Review findings and download generated reports.
 
 ## Generate realistic sample documents
-Use the sample generator to build a full dataset:
+The repository tracks only the sample-generation scripts and edge-case templates.
+Full audit evidence documents are generated locally and are not included in the GitHub source tree.
+
+To build the sample dataset:
 ```bash
 python generate_real_documents_complete.py
 ```
+
+For smaller regression test documents:
+```bash
+python test_data/generate_test_data.py
+```
+
+## Sample document policy
+- `sample_audit_documents/INTERIM/` and `sample_audit_documents/FIELDWORK/` contain generated audit evidence and should not be committed.
+- `sample_audit_documents/edge_cases/` is retained for error-handling validation.
+- `test_data/` retains the generator script and README only; generated test files are excluded from GitHub.
 
 ## Supported audit evidence formats
 - PDF, DOCX, TXT, CSV, XLSX, EML, PNG, JPG
