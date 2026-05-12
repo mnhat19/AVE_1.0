@@ -7,6 +7,7 @@ This is the frontend application for the AI Audit Tool MVP, built with React, Ty
 - **Document Upload**: Drag & drop upload for audit evidence and files.
 - **Audit Execution**: Trigger the multi-agent backend pipeline (Interim, Fieldwork, or Both).
 - **Results Dashboard**: View findings, anomalies, and download generated artifacts (Issue Log, Risk Register, Audit Memo).
+- **Feedback Loop**: Provide ACCEPT/REJECT/MODIFY feedback with corrected values.
 - **Mock Mode**: Built-in mock data fallback when the backend is unavailable or during UI development.
 
 ## Requirements
@@ -37,6 +38,11 @@ npm run dev
 4. Build for production:
 ```bash
 npm run build
+```
+
+5. Run lint checks:
+```bash
+npm run lint
 ```
 
 ## Mock Mode

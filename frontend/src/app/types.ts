@@ -9,7 +9,9 @@ export type StepDefinition = {
 
 export type HealthStatus = 'ok' | 'warn' | 'unknown'
 
-export type SessionStatus = 'idle' | 'creating' | 'ready' | 'error'
+export type SessionStatus = 'idle' | 'creating' | 'loading' | 'ready' | 'error'
+
+export type SessionInfoStatus = 'idle' | 'loading' | 'success' | 'error'
 
 export type RunStatus = 'idle' | 'running' | 'success' | 'error'
 

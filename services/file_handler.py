@@ -4,7 +4,8 @@ import shutil
 
 from config.settings import settings
 from db.database import SessionLocal
-from db.models import DocumentBundle, FileRecord, ValidationReport, VersionedNote
+from db.models import DocumentBundle, FileRecord
+from services.validator import validate_bundle as _validate_bundle
 
 UPLOAD_DIR = Path(settings.upload_dir)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -48,39 +49,6 @@ FIELDWORK_KEYWORDS = [
     "ledger",
 ]
 
-INTERIM_REQUIRED = {
-    "sop_policy": ["sop", "policy", "procedure"],
-    "walkthrough_notes": ["walkthrough", "tobc", "control"],
-    "risk_matrix": ["risk_matrix", "rcm", "risk_control"],
-}
-
-FIELDWORK_REQUIRED = {
-    "trial_balance": ["trial_balance", "trialbalance"],
-    "lead_schedule": ["lead_schedule", "lead-schedule"],
-    "ageing": ["ageing", "aging"],
-    "reconciliation": ["reconciliation", "recon", "roll_forward", "rollforward"],
-    "confirmation": ["confirmation", "confirm", "bank", "inventory"],
-}
-
-
-def _has_keyword(filenames: list[str], keywords: list[str]) -> bool:
-    return any(keyword in name for name in filenames for keyword in keywords)
-
-
-def _missing_items_for_stage(filenames: list[str], stage: str) -> list[dict]:
-    if stage == "INTERIM":
-        required_map = INTERIM_REQUIRED
-    elif stage == "FIELDWORK":
-        required_map = FIELDWORK_REQUIRED
-    else:
-        return []
-
-    missing = []
-    for item, keywords in required_map.items():
-        if not _has_keyword(filenames, keywords):
-            missing.append({"item": item, "stage": stage, "keywords": keywords})
-    return missing
-
 
 def classify_stage(filename: str) -> str:
     name = filename.lower()
@@ -94,69 +62,7 @@ def classify_stage(filename: str) -> str:
 
 
 def validate_bundle(bundle_id: str) -> dict:
-    db = SessionLocal()
-    try:
-        bundle = db.query(DocumentBundle).filter_by(id=bundle_id).first()
-        if not bundle:
-            return {"bundle_id": bundle_id, "missing_items": [], "is_complete": True}
-
-        records = (
-            db.query(FileRecord)
-            .filter_by(bundle_id=bundle_id)
-            .filter(FileRecord.validation_status != "MISSING")
-            .all()
-        )
-        filenames = [record.filename.lower() for record in records if record.filename]
-
-        if bundle.stage == "BOTH":
-            missing_items = _missing_items_for_stage(filenames, "INTERIM")
-            missing_items.extend(_missing_items_for_stage(filenames, "FIELDWORK"))
-        else:
-            missing_items = _missing_items_for_stage(filenames, bundle.stage)
-
-        db.query(FileRecord).filter_by(bundle_id=bundle_id, validation_status="MISSING").delete(
-            synchronize_session=False
-        )
-
-        for item in missing_items:
-            placeholder = FileRecord(
-                bundle_id=bundle_id,
-                filename=f"__MISSING__{item['stage'].lower()}__{item['item']}",
-                format="MISSING",
-                stage=item["stage"],
-                validation_status="MISSING",
-                file_path=None,
-            )
-            db.add(placeholder)
-
-        db.query(ValidationReport).filter_by(bundle_id=bundle_id).delete(synchronize_session=False)
-        report = ValidationReport(
-            bundle_id=bundle_id,
-            stage=bundle.stage,
-            missing_items=missing_items,
-            is_complete=len(missing_items) == 0,
-        )
-        db.add(report)
-
-        if missing_items:
-            change_description = f"Validation incomplete: {len(missing_items)} items missing"
-        else:
-            change_description = "Validation complete: all required items present"
-        note = VersionedNote(
-            session_id=bundle.session_id,
-            author="SYSTEM",
-            change_description=change_description,
-        )
-        db.add(note)
-        db.commit()
-        return {
-            "bundle_id": bundle_id,
-            "stage": bundle.stage,
-            "missing_items": missing_items,
-            "is_complete": len(missing_items) == 0,
-        }
-    finally:
-        db.close()
+    return _validate_bundle(bundle_id)
 
 
 async def save_and_classify(file, session_id: str, bundle_id: str | None = None) -> FileRecord:

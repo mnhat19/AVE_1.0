@@ -10,6 +10,10 @@ import {
   type RunResponse,
 } from '../../services/api'
 import type { RunStatus } from '../../app/types'
+import { ConfidenceScore } from '../../components/ConfidenceScore'
+import { EvidenceLinkBadge } from '../../components/EvidenceLinkBadge'
+import { ManualReviewBadge } from '../../components/ManualReviewBadge'
+import { MaterialityTag } from '../../components/MaterialityTag'
 import styles from '../panels.module.css'
 
 type ResultsPanelProps = {
@@ -17,6 +21,7 @@ type ResultsPanelProps = {
   runStatus: RunStatus
   runError: string | null
   runResult: RunResponse | null
+  onBack: () => void
 }
 
 export function ResultsPanel({
@@ -24,6 +29,7 @@ export function ResultsPanel({
   runStatus,
   runError,
   runResult,
+  onBack,
 }: ResultsPanelProps) {
   const [findings, setFindings] = useState<Finding[]>([])
   const [findingsStatus, setFindingsStatus] = useState<'idle' | 'loading' | 'error' | 'success'>(
@@ -36,6 +42,7 @@ export function ResultsPanel({
   const [selectedFinding, setSelectedFinding] = useState<Finding | null>(null)
   const [feedbackAction, setFeedbackAction] = useState<FeedbackAction>('ACCEPT')
   const [feedbackComment, setFeedbackComment] = useState('')
+  const [feedbackCorrection, setFeedbackCorrection] = useState('')
   const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'sending' | 'error'>(
     'idle'
   )
@@ -45,6 +52,8 @@ export function ResultsPanel({
     { key: 'issue_log', label: 'Issue Log (XLSX)' },
     { key: 'risk_register', label: 'Risk Register (XLSX)' },
     { key: 'memo', label: 'Audit Memo (DOCX)' },
+    { key: 'evidence_pdf', label: 'Evidence Bundle (PDF)' },
+    { key: 'versioned_notes', label: 'Versioned Notes (MD)' },
   ]
 
   const canDownload = Boolean(sessionId) && Boolean(runResult)
@@ -101,6 +110,7 @@ export function ResultsPanel({
     setSelectedFinding(finding)
     setFeedbackAction('ACCEPT')
     setFeedbackComment('')
+    setFeedbackCorrection('')
     setFeedbackStatus('idle')
     setFeedbackError(null)
   }
@@ -121,7 +131,8 @@ export function ResultsPanel({
       await submitFeedback(
         selectedFinding.id,
         feedbackAction,
-        feedbackComment
+        feedbackComment,
+        feedbackCorrection || undefined
       )
 
       const nextStatus = feedbackAction === 'MODIFY' ? 'IN_PROGRESS' : 'RESOLVED'
@@ -244,8 +255,11 @@ export function ResultsPanel({
                   <th>Description</th>
                   <th>Stage</th>
                   <th>Severity</th>
+                  <th>Materiality</th>
                   <th>Status</th>
                   <th>Confidence</th>
+                  <th>Evidence</th>
+                  <th>Review</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -265,9 +279,20 @@ export function ResultsPanel({
                       </span>
                     </td>
                     <td>
+                      <MaterialityTag level={finding.materiality} />
+                    </td>
+                    <td>
                       <span className={styles.statusBadge}>{finding.status}</span>
                     </td>
-                    <td>{(finding.confidence_score * 100).toFixed(1)}%</td>
+                    <td>
+                      <ConfidenceScore score={finding.confidence_score} />
+                    </td>
+                    <td>
+                      <EvidenceLinkBadge links={finding.evidence_links} />
+                    </td>
+                    <td>
+                      {finding.review_flag ? <ManualReviewBadge /> : '-'}
+                    </td>
                     <td>
                       <button
                         className={styles.buttonGhost}
@@ -326,6 +351,19 @@ export function ResultsPanel({
           )}
         </div>
       </div>
+      <div className={styles.panel}>
+        <h2 className={styles.panelTitle}>Workflow Navigation</h2>
+        <div className={styles.buttonRow}>
+          <button
+            className={styles.buttonGhost}
+            type="button"
+            onClick={onBack}
+            aria-label="Back to run step"
+          >
+            Back to Run
+          </button>
+        </div>
+      </div>
       {selectedFinding ? (
         <div className={styles.modalOverlay} role="dialog" aria-modal="true">
           <div className={styles.modal}>
@@ -368,6 +406,18 @@ export function ResultsPanel({
                   value={feedbackComment}
                   onChange={(event) => setFeedbackComment(event.target.value)}
                   placeholder="Add supporting notes or required changes"
+                />
+              </div>
+              <div className={styles.inputRow}>
+                <label className={styles.label} htmlFor="feedback-correction">
+                  Corrected Value (optional)
+                </label>
+                <textarea
+                  id="feedback-correction"
+                  className={`${styles.input} ${styles.textarea}`}
+                  value={feedbackCorrection}
+                  onChange={(event) => setFeedbackCorrection(event.target.value)}
+                  placeholder="Provide corrected values or JSON payload"
                 />
               </div>
               {feedbackError ? (

@@ -1,4 +1,4 @@
-import { type ComponentType, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import StepHeader from '../components/StepHeader'
 import { ResultsPanel } from '../features/results/ResultsPanel'
@@ -10,9 +10,11 @@ import {
   createSession,
   getErrorMessage,
   getHealth,
+  getSessionSummary,
   MOCK_MODE,
   runSession,
   type RunResponse,
+  type SessionSummaryResponse,
 } from '../services/api'
 import AppShell from './AppShell'
 import type {
@@ -20,6 +22,7 @@ import type {
   RunStage,
   RunStatus,
   SessionStatus,
+  SessionInfoStatus,
   StepDefinition,
   StepKey,
 } from './types'
@@ -57,13 +60,6 @@ const steps: StepDefinition[] = [
   },
 ]
 
-const panels: Record<StepKey, ComponentType<any>> = {
-  session: SessionPanel,
-  upload: UploadPanel,
-  run: RunPanel,
-  results: ResultsPanel,
-}
-
 function App() {
   const [sessionId, setSessionId] = useState(() => {
     if (typeof window === 'undefined') {
@@ -76,6 +72,10 @@ function App() {
     sessionId ? 'ready' : 'idle'
   )
   const [sessionError, setSessionError] = useState<string | null>(null)
+  const [sessionInfoStatus, setSessionInfoStatus] = useState<SessionInfoStatus>('idle')
+  const [sessionInfoError, setSessionInfoError] = useState<string | null>(null)
+  const [sessionFilesCount, setSessionFilesCount] = useState<number | null>(null)
+  const [sessionBundlesCount, setSessionBundlesCount] = useState<number | null>(null)
   const [healthStatus, setHealthStatus] = useState<HealthStatus>('unknown')
   const [llmProvider, setLlmProvider] = useState<string | null>(null)
   const [runStage, setRunStage] = useState<RunStage>('BOTH')
@@ -84,7 +84,6 @@ function App() {
   const [runResult, setRunResult] = useState<RunResponse | null>(null)
   const [activeStep, setActiveStep] = useState<StepKey>('session')
 
-  const ActivePanel = panels[activeStep]
   const activeDefinition = useMemo(
     () => steps.find((step) => step.key === activeStep) ?? steps[0],
     [activeStep]
@@ -129,6 +128,66 @@ function App() {
     localStorage.removeItem(SESSION_STORAGE_KEY)
   }, [sessionId])
 
+  const resetSessionInfo = useCallback(() => {
+    setSessionInfoStatus('idle')
+    setSessionInfoError(null)
+    setSessionFilesCount(null)
+    setSessionBundlesCount(null)
+  }, [])
+
+  const applySessionSummary = useCallback((summary: SessionSummaryResponse) => {
+    setSessionFilesCount(summary.files_count)
+    setSessionBundlesCount(summary.bundles_count)
+    setSessionInfoStatus('success')
+    setSessionInfoError(null)
+  }, [])
+
+  const refreshSessionSummary = useCallback(async (value: string) => {
+    if (!value) {
+      resetSessionInfo()
+      return null
+    }
+
+    setSessionInfoStatus('loading')
+    setSessionInfoError(null)
+
+    try {
+      const summary = await getSessionSummary(value)
+      applySessionSummary(summary)
+      return summary
+    } catch (error) {
+      setSessionInfoStatus('error')
+      setSessionInfoError(getErrorMessage(error, 'Unable to load session details.'))
+      return null
+    }
+  }, [applySessionSummary, resetSessionInfo])
+
+  useEffect(() => {
+    let isActive = true
+
+    const validate = async () => {
+      if (!sessionId) {
+        resetSessionInfo()
+        return
+      }
+
+      const summary = await refreshSessionSummary(sessionId)
+      if (!isActive) {
+        return
+      }
+      if (!summary) {
+        setSessionStatus('error')
+        setSessionError('Unable to load session details.')
+      }
+    }
+
+    void validate()
+
+    return () => {
+      isActive = false
+    }
+  }, [refreshSessionSummary, resetSessionInfo, sessionId])
+
   const handleCreateSession = async () => {
     setSessionError(null)
     setSessionStatus('creating')
@@ -140,6 +199,9 @@ function App() {
       const response = await createSession()
       setSessionId(response.session_id)
       setSessionStatus('ready')
+      setSessionFilesCount(0)
+      setSessionBundlesCount(0)
+      setSessionInfoStatus('success')
       setActiveStep('upload')
     } catch (error) {
       setSessionStatus('error')
@@ -147,7 +209,7 @@ function App() {
     }
   }
 
-  const handleLoadSession = (value: string) => {
+  const loadExistingSession = async (value: string) => {
     const trimmed = value.trim()
     if (!trimmed) {
       setSessionStatus('error')
@@ -156,18 +218,59 @@ function App() {
     }
 
     setSessionError(null)
-    setSessionId(trimmed)
-    setSessionStatus('ready')
+    setSessionStatus('loading')
     setRunStatus('idle')
     setRunResult(null)
     setRunError(null)
-    setActiveStep('upload')
+
+    try {
+      const summary = await refreshSessionSummary(trimmed)
+      if (!summary) {
+        setSessionStatus('error')
+        setSessionError('Unable to load session details.')
+        return
+      }
+      setSessionId(trimmed)
+      setSessionStatus('ready')
+      setActiveStep('upload')
+    } catch (error) {
+      setSessionStatus('error')
+      setSessionError(getErrorMessage(error, 'Unable to load session.'))
+    }
+  }
+
+  const handleLoadSession = (value: string) => {
+    void loadExistingSession(value)
+  }
+
+  const handleQueueChange = (count: number) => {
+    setSessionFilesCount(count)
+    setSessionInfoError(null)
+    if (sessionInfoStatus !== 'loading') {
+      setSessionInfoStatus('success')
+    }
+  }
+
+  const resolveFilesCount = async () => {
+    if (sessionFilesCount !== null) {
+      return sessionFilesCount
+    }
+
+    const summary = await refreshSessionSummary(sessionId)
+    return summary?.files_count ?? 0
   }
 
   const handleRun = async (stage: RunStage) => {
     if (!sessionId) {
       setRunStatus('error')
       setRunError('Session ID is required before running the audit.')
+      return
+    }
+
+    const filesCount = await resolveFilesCount()
+    if (!filesCount) {
+      setRunStatus('error')
+      setRunError('No files found for this session. Upload documents first.')
       return
     }
 
@@ -202,43 +305,54 @@ function App() {
         title={activeDefinition.title}
         description={activeDefinition.description}
       />
-      <ActivePanel
-        {...(activeStep === 'session'
-          ? {
-              sessionId,
-              sessionStatus,
-              sessionError,
-              llmProvider,
-              healthStatus,
-              onCreateSession: handleCreateSession,
-              onLoadSession: handleLoadSession,
-            }
-          : {})}
-        {...(activeStep === 'upload'
-          ? {
-              sessionId,
-            }
-          : {})}
-        {...(activeStep === 'run'
-          ? {
-              sessionId,
-              runStage,
-              runStatus,
-              runError,
-              runResult,
-              onStageChange: setRunStage,
-              onRun: handleRun,
-            }
-          : {})}
-        {...(activeStep === 'results'
-          ? {
-              sessionId,
-              runStatus,
-              runError,
-              runResult,
-            }
-          : {})}
-      />
+      {activeStep === 'session' ? (
+        <SessionPanel
+          sessionId={sessionId}
+          sessionStatus={sessionStatus}
+          sessionError={sessionError}
+          sessionInfoStatus={sessionInfoStatus}
+          sessionInfoError={sessionInfoError}
+          sessionFilesCount={sessionFilesCount}
+          sessionBundlesCount={sessionBundlesCount}
+          llmProvider={llmProvider}
+          healthStatus={healthStatus}
+          onCreateSession={handleCreateSession}
+          onLoadSession={handleLoadSession}
+          onNext={() => setActiveStep('upload')}
+        />
+      ) : null}
+      {activeStep === 'upload' ? (
+        <UploadPanel
+          sessionId={sessionId}
+          onQueueChange={handleQueueChange}
+          onBack={() => setActiveStep('session')}
+          onNext={() => setActiveStep('run')}
+        />
+      ) : null}
+      {activeStep === 'run' ? (
+        <RunPanel
+          sessionId={sessionId}
+          sessionFilesCount={sessionFilesCount}
+          sessionInfoStatus={sessionInfoStatus}
+          runStage={runStage}
+          runStatus={runStatus}
+          runError={runError}
+          runResult={runResult}
+          onStageChange={setRunStage}
+          onRun={handleRun}
+          onBack={() => setActiveStep('upload')}
+          onNext={() => setActiveStep('results')}
+        />
+      ) : null}
+      {activeStep === 'results' ? (
+        <ResultsPanel
+          sessionId={sessionId}
+          runStatus={runStatus}
+          runError={runError}
+          runResult={runResult}
+          onBack={() => setActiveStep('run')}
+        />
+      ) : null}
     </AppShell>
   )
 }

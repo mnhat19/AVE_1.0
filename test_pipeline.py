@@ -2,11 +2,13 @@ import asyncio
 from pathlib import Path
 
 import httpx
+import pytest
 
 BASE_URL = "http://localhost:8000/api/v1"
 TEST_DATA_DIR = Path("test_data")
 
 
+@pytest.mark.asyncio
 async def test_full_flow():
     async with httpx.AsyncClient(timeout=120) as client:
         session_resp = await client.post(f"{BASE_URL}/sessions")
@@ -20,6 +22,11 @@ async def test_full_flow():
             "trial_balance.xlsx",
             "sop_procurement.docx",
             "walkthrough_notes.pdf",
+            "risk_matrix.csv",
+            "lead_schedule.csv",
+            "ageing.csv",
+            "reconciliation.csv",
+            "bank_confirmation.pdf",
         ]:
             path = TEST_DATA_DIR / name
             if path.exists():

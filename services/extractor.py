@@ -1,12 +1,10 @@
 from pathlib import Path
-from email import policy
-from email.parser import BytesParser
 
 import pandas as pd
 import pdfplumber
-import pytesseract
 from docx import Document
-from PIL import Image
+from services.email_parser import parse_eml, parse_pst
+from services.ocr_service import extract_text
 
 
 def extract_pdf(path: str) -> dict:
@@ -62,70 +60,32 @@ def extract_text(path: str) -> dict:
 
 
 def extract_image(path: str) -> dict:
-    img = Image.open(path)
-    try:
-        text = pytesseract.image_to_string(img, lang="vie+eng")
-    except Exception as exc:
-        return {"type": "text", "content": "", "error": f"ocr_unavailable:{exc}"}
-    return {"type": "text", "content": text}
+    result = extract_text(path)
+    payload = {"type": "text", "content": result.get("text", "")}
+    if result.get("error"):
+        payload["error"] = result["error"]
+    return payload
 
 
 def extract_eml(path: str) -> dict:
-    with open(path, "rb") as handle:
-        message = BytesParser(policy=policy.default).parse(handle)
-
-    body = ""
-    if message.is_multipart():
-        for part in message.walk():
-            content_type = part.get_content_type()
-            if content_type == "text/plain":
-                body = part.get_content()
-                break
-    else:
-        body = message.get_content()
-
+    parsed = parse_eml(path)
     return {
         "type": "text",
-        "content": body or "",
-        "metadata": {
-            "sender": message.get("From"),
-            "date": message.get("Date"),
-            "subject": message.get("Subject"),
-        },
+        "content": parsed.get("content", ""),
+        "metadata": parsed.get("metadata", {}),
     }
 
 
 def extract_pst(path: str) -> dict:
-    try:
-        import pypff
-    except Exception as exc:
-        return {"type": "text", "content": "", "error": f"pst_not_supported:{exc}"}
-
-    pst = pypff.file()
-    pst.open(path)
-    texts: list[str] = []
-
-    def walk(folder) -> None:
-        for index in range(folder.number_of_messages):
-            message = folder.get_message(index)
-            subject = message.subject or ""
-            body = message.plain_text_body or ""
-            if subject or body:
-                texts.append(f"Subject: {subject}\n{body}")
-            if len(texts) >= 200:
-                return
-        for idx in range(folder.number_of_sub_folders):
-            walk(folder.get_sub_folder(idx))
-            if len(texts) >= 200:
-                return
-
-    try:
-        root = pst.get_root_folder()
-        walk(root)
-    finally:
-        pst.close()
-
-    return {"type": "text", "content": "\n\n".join(texts), "metadata": {"messages": len(texts)}}
+    parsed = parse_pst(path)
+    payload = {
+        "type": "text",
+        "content": parsed.get("content", ""),
+        "metadata": parsed.get("metadata", {}),
+    }
+    if parsed.get("error"):
+        payload["error"] = parsed["error"]
+    return payload
 
 
 EXTRACTORS = {

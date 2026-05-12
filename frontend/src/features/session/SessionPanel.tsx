@@ -1,21 +1,27 @@
 import { useState } from 'react'
 
-import type { HealthStatus, SessionStatus } from '../../app/types'
+import type { HealthStatus, SessionInfoStatus, SessionStatus } from '../../app/types'
 import styles from '../panels.module.css'
 
 type SessionPanelProps = {
   sessionId: string
   sessionStatus: SessionStatus
   sessionError: string | null
+  sessionInfoStatus: SessionInfoStatus
+  sessionInfoError: string | null
+  sessionFilesCount: number | null
+  sessionBundlesCount: number | null
   llmProvider: string | null
   healthStatus: HealthStatus
   onCreateSession: () => void
-  onLoadSession: (value: string) => void
+  onLoadSession: (value: string) => void | Promise<void>
+  onNext: () => void
 }
 
 const statusLabels: Record<SessionStatus, string> = {
   idle: 'Not Started',
   creating: 'Creating',
+  loading: 'Loading',
   ready: 'Ready',
   error: 'Needs Attention',
 }
@@ -24,14 +30,29 @@ export function SessionPanel({
   sessionId,
   sessionStatus,
   sessionError,
+  sessionInfoStatus,
+  sessionInfoError,
+  sessionFilesCount,
+  sessionBundlesCount,
   llmProvider,
   healthStatus,
   onCreateSession,
   onLoadSession,
+  onNext,
 }: SessionPanelProps) {
   const [inputSessionId, setInputSessionId] = useState('')
 
-  const isBusy = sessionStatus === 'creating'
+  const isBusy = sessionStatus === 'creating' || sessionStatus === 'loading'
+  const hasFiles = (sessionFilesCount ?? 0) > 0
+  const filesLabel =
+    sessionInfoStatus === 'loading'
+      ? 'Checking uploads...'
+      : sessionFilesCount === null
+      ? 'Uploaded files: --'
+      : `Uploaded files: ${sessionFilesCount}`
+  const bundlesLabel =
+    sessionBundlesCount === null ? 'Bundles: --' : `Bundles: ${sessionBundlesCount}`
+  const canContinue = Boolean(sessionId)
 
   return (
     <section className={styles.section}>
@@ -84,8 +105,13 @@ export function SessionPanel({
             Verify required document groups before executing the audit pipeline.
           </p>
           <span className={`${styles.badge} ${styles.badgeNeutral}`}>
-            Awaiting Upload
+            {hasFiles ? 'Uploads Ready' : 'Awaiting Upload'}
           </span>
+          <p className={styles.panelMeta}>{filesLabel}</p>
+          <p className={styles.panelMeta}>{bundlesLabel}</p>
+          {sessionInfoError ? (
+            <p className={styles.errorText}>{sessionInfoError}</p>
+          ) : null}
         </div>
       </div>
       <div className={styles.panel}>
@@ -110,6 +136,20 @@ export function SessionPanel({
             </tr>
           </tbody>
         </table>
+      </div>
+      <div className={styles.panel}>
+        <h2 className={styles.panelTitle}>Workflow Navigation</h2>
+        <div className={styles.buttonRow}>
+          <button
+            className={styles.buttonPrimary}
+            type="button"
+            onClick={onNext}
+            disabled={!canContinue}
+            aria-label="Continue to upload step"
+          >
+            Continue to Upload
+          </button>
+        </div>
       </div>
     </section>
   )

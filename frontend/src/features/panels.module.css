@@ -227,6 +227,80 @@
   color: var(--color-error);
 }
 
+.materialityTag {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--font-size-label);
+  font-weight: 700;
+}
+
+.materialityHigh {
+  background: rgba(186, 26, 26, 0.18);
+  color: var(--color-error);
+}
+
+.materialityMedium {
+  background: rgba(146, 70, 40, 0.12);
+  color: var(--color-tertiary);
+}
+
+.materialityLow {
+  background: rgba(0, 108, 73, 0.12);
+  color: var(--color-secondary);
+}
+
+.manualReviewBadge {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  background: rgba(186, 26, 26, 0.18);
+  color: var(--color-error);
+}
+
+.confidenceWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.confidenceBar {
+  width: 80px;
+  height: 6px;
+  background: var(--color-surface-container);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.confidenceFill {
+  height: 100%;
+  background: var(--color-primary);
+}
+
+.confidenceValue {
+  font-size: var(--font-size-body-sm);
+  color: var(--color-on-surface-variant);
+}
+
+.evidenceBadge {
+  display: inline-flex;
+  max-width: 220px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  font-size: var(--font-size-body-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .modalOverlay {
   position: fixed;
   inset: 0;

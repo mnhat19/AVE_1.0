@@ -18,6 +18,11 @@ frontend/.env.*
 outputs/
 uploads/
 
+# Local test artifacts
+test_output_*.xlsx
+test_output_*.docx
+test_output_*.pdf
+
 # Generator scripts and drafts
 generate_*.py
 Stitch_Prompt.md

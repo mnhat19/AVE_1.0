@@ -10,6 +10,7 @@ This repository includes the backend, frontend, curated sample evidence, and cus
 - [Quick start](#quick-start)
 - [Run the backend](#run-the-backend)
 - [Run the frontend](#run-the-frontend)
+- [Testing](#testing)
 - [Audit workflow](#audit-workflow)
 - [Sample evidence included](#sample-evidence-included)
 - [Customer test cases](#customer-test-cases)
@@ -82,6 +83,19 @@ npm run dev
 
 Then open `http://localhost:5173`.
 
+## Testing
+Backend tests:
+```bash
+pytest tests/ -v --tb=short
+```
+
+Frontend checks:
+```bash
+cd frontend
+npm run lint
+npm run build
+```
+
 ## Audit workflow
 1. Start the backend and frontend.
 2. In the UI, create a new audit session.
@@ -103,7 +117,7 @@ The included samples support:
 - Interim + fieldwork cross-stage validation.
 - Error handling for malformed or missing files.
 - Size-limit and unsupported file validation.
-- Downloadable issue log, risk register, and audit memo generation.
+- Downloadable issue log, risk register, audit memo, evidence PDF, and versioned notes.
 
 ## API summary
 Base URL: `http://localhost:8000/api/v1`
@@ -113,8 +127,13 @@ POST   /sessions
 POST   /sessions/{session_id}/upload
 POST   /sessions/{session_id}/run  (form: stage)
 GET    /sessions/{session_id}/findings
+GET    /sessions/{session_id}/execution-plan
+GET    /sessions/{session_id}/consolidated-findings
+GET    /findings/{id}/evidence-links
 GET    /sessions/{session_id}/download/{type}
-POST   /findings/{id}/feedback  (form: action, comment)
+POST   /findings/{id}/feedback  (form: action, comment, corrected_value)
+GET    /accuracy-metrics
+GET    /knowledge-base
 ```
 
 ## Repository hygiene

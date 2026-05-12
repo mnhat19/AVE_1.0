@@ -16,6 +16,15 @@ export type CreateSessionResponse = {
   status: string
 }
 
+export type SessionSummaryResponse = {
+  session_id: string
+  status: string
+  created_at?: string
+  last_active_at?: string
+  bundles_count: number
+  files_count: number
+}
+
 export type UploadFileResult = {
   file_id: string
   filename: string
@@ -28,6 +37,11 @@ export type UploadResponse = {
   session_id: string
   files: UploadFileResult[]
   validation?: unknown
+}
+
+export type SessionFilesResponse = {
+  session_id: string
+  files: UploadFileResult[]
 }
 
 export type RunResponse = {
@@ -49,6 +63,9 @@ export type Finding = {
   severity: string
   status: string
   confidence_score: number
+  evidence_links?: { id?: string; source_file_id?: string; reference?: string }[]
+  materiality?: string | null
+  review_flag?: boolean
 }
 
 export type FeedbackAction = 'ACCEPT' | 'REJECT' | 'MODIFY'
@@ -57,6 +74,7 @@ export type FeedbackResponse = {
   status: string
   finding_id: string
   action: FeedbackAction
+  feedback_id?: string
 }
 
 const createMockSessionId = () =>
@@ -70,6 +88,9 @@ const mockFindings: Finding[] = [
     severity: 'HIGH',
     status: 'OPEN',
     confidence_score: 0.78,
+    materiality: 'MATERIAL',
+    review_flag: false,
+    evidence_links: [{ reference: 'Sheet1!Row 10' }],
   },
   {
     id: 'FND-021',
@@ -78,6 +99,9 @@ const mockFindings: Finding[] = [
     severity: 'MEDIUM',
     status: 'IN_PROGRESS',
     confidence_score: 0.64,
+    materiality: 'IMMATERIAL',
+    review_flag: true,
+    evidence_links: [{ reference: 'Page 2' }],
   },
   {
     id: 'FND-033',
@@ -86,6 +110,9 @@ const mockFindings: Finding[] = [
     severity: 'LOW',
     status: 'OPEN',
     confidence_score: 0.52,
+    materiality: 'IMMATERIAL',
+    review_flag: false,
+    evidence_links: [],
   },
 ]
 
@@ -111,12 +138,19 @@ const requestJson = async <T>(path: string, options?: RequestInit) => {
   const data = isJson ? await response.json() : await response.text()
 
   if (!response.ok) {
-    const detail =
-      typeof data === 'string'
-        ? data
-        : data && typeof data === 'object' && 'detail' in data
-        ? String((data as { detail?: string }).detail)
-        : 'Request failed'
+    let detail = 'Request failed'
+    if (typeof data === 'string') {
+      detail = data
+    } else if (data && typeof data === 'object' && 'detail' in data) {
+      const rawDetail = (data as { detail?: unknown }).detail
+      if (typeof rawDetail === 'string') {
+        detail = rawDetail
+      } else if (rawDetail && typeof rawDetail === 'object') {
+        const message = (rawDetail as { message?: string }).message
+        const error = (rawDetail as { error?: string }).error
+        detail = [message, error].filter(Boolean).join(': ') || detail
+      }
+    }
 
     const error = new Error(detail) as ApiError
     error.status = response.status
@@ -160,6 +194,50 @@ export const createSession = async () => {
   } catch (error) {
     if (SHOULD_MOCK_ON_FAILURE && isNetworkError(error)) {
       return { session_id: createMockSessionId(), status: 'created' }
+    }
+    throw error
+  }
+}
+
+export const getSessionSummary = async (sessionId: string) => {
+  if (MOCK_MODE) {
+    return {
+      session_id: sessionId,
+      status: 'mock',
+      bundles_count: 0,
+      files_count: 0,
+    }
+  }
+
+  try {
+    return await requestJson<SessionSummaryResponse>(
+      `/api/v1/sessions/${sessionId}`
+    )
+  } catch (error) {
+    if (SHOULD_MOCK_ON_FAILURE && isNetworkError(error)) {
+      return {
+        session_id: sessionId,
+        status: 'mock',
+        bundles_count: 0,
+        files_count: 0,
+      }
+    }
+    throw error
+  }
+}
+
+export const getSessionFiles = async (sessionId: string) => {
+  if (MOCK_MODE) {
+    return { session_id: sessionId, files: [] }
+  }
+
+  try {
+    return await requestJson<SessionFilesResponse>(
+      `/api/v1/sessions/${sessionId}/files`
+    )
+  } catch (error) {
+    if (SHOULD_MOCK_ON_FAILURE && isNetworkError(error)) {
+      return { session_id: sessionId, files: [] }
     }
     throw error
   }
@@ -259,13 +337,17 @@ export const getFindings = async (sessionId: string) => {
 export const submitFeedback = async (
   findingId: string,
   action: FeedbackAction,
-  comment: string
+  comment: string,
+  correctedValue?: string
 ) => {
   if (MOCK_MODE) {
     return { status: 'feedback_recorded', finding_id: findingId, action }
   }
 
   const body = new URLSearchParams({ action, comment })
+  if (correctedValue) {
+    body.set('corrected_value', correctedValue)
+  }
   try {
     return await requestJson<FeedbackResponse>(
       `/api/v1/findings/${findingId}/feedback`,
